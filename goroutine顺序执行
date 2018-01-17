@@ -1,0 +1,80 @@
+/*
+有3个goroutine A\B\C和1个公共的字符数组。
+A的功能就是向数组输出A，
+B的功能就是向字符输出B，
+C的功能就是向数组输出C，
+要求按顺序向数组赋值ABCABC，
+输出ABC的个数由A函数输入参数决定。
+输入描述: 输入一个 num int 整数
+输出描述: 输出 num 个ABC
+*/
+
+package main
+
+import (
+	"fmt"
+	"io"
+)
+
+var str []byte
+var num int
+var cha chan int = make(chan int)
+var chb chan int = make(chan int)
+var chc chan int = make(chan int)
+
+var quit chan int = make(chan int)
+
+func main() {
+	go A()
+	go B()
+	go C()
+	fmt.Println("start")
+	for {
+		fmt.Println("please input num :")
+		_, ok := fmt.Scanf("%d\n", &num)
+		if ok == io.EOF {
+			break
+		}
+		cha <- 1
+		<-quit
+		for i := range str {
+			fmt.Printf("%c", str[i])
+		}
+		fmt.Println(" \n ------")
+		str = nil
+		fmt.Println("end")
+	}
+
+}
+func A() {
+
+	for {
+		fmt.Println("a num:", num)
+		<-cha
+		if num != 0 {
+			str = append(str, 'A')
+			chb <- 1
+		} else {
+			quit <- 1
+		}
+		num--
+
+	}
+}
+func B() {
+	for {
+		fmt.Println("b num:", num)
+		<-chb
+		str = append(str, 'B')
+		chc <- 1
+
+	}
+}
+func C() {
+	for {
+		fmt.Println("c num:", num)
+		<-chc
+		str = append(str, 'C')
+		cha <- 1
+	}
+}
