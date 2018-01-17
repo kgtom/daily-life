@@ -1,0 +1,75 @@
+
+
+第一 介绍：
+HTTP/2 的主要目标是改进传输性能，更有效地利用网络资源，实现低延迟和高吞吐量:
+二进制分帧：HTTP 2.0 的所有帧都采用二进制编码
+多路复用:允许同时通过单一的 HTTP/2 连接发起多重的请求-响应消息
+请求优先级:把HTTP 消息分解为很多独立的帧之后，就可以通过优化这些帧的交错和传输顺序
+header压缩:HTTP1.x的header带有大量信息，而且每次都要重复发送，HTTP/2使用encoder来减少需要传输的header大小
+服务端推送:服务器可以对一个客户端请求发送多个响应
+
+第二：HTTP/2的多路复用和HTTP1.1中的长连接复用有什么区别？
+ HTTP/1.0 一次请求-响应，建立一个连接，用完关闭；每一个请求都要建立一个连接；
+
+ HTTP/1.1 Pipeling解决方式为，若干个请求排队串行化单线程处理，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；
+
+ HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；
+
+第三 golang中的使用
+  
+  1.生成证书
+go run (/usr/local/Cellar/go/1.9.2/libexec)$GOROOT/src/crypto/tls/generate_cert.go --host localhost
+2017/11/22 10:06:58 written cert.pem
+2017/11/22 10 :06:58 written key.pem
+  2. 你懂得  go get  golang.org/x/net/http
+  package main
+
+import (
+	"fmt"
+	"html"
+	"log"
+	"net/http"
+
+	"golang.org/x/net/http2"
+)
+
+func main() {
+	var srv http.Server
+	http2.VerboseLogs = true
+	srv.Addr = ":8080"
+	// This enables http2 support
+	http2.ConfigureServer(&srv, nil)
+	// Plain text test handler
+	// Open https://localhost:8080/randomtest
+	// in your Chrome Canary browser
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hi tester %q\n", html.EscapeString(r.URL.Path))
+		ShowRequestInfoHandler(w, r)
+	})
+	// Listen as https ssl server
+	// NOTE: WITHOUT SSL IT WONT WORK!!
+	// To self generate a test ssl cert/key you could go to
+	// http://www.selfsignedcertificate.com/
+	// or read the openssl manual
+	log.Fatal(srv.ListenAndServeTLS("/usr/local/Cellar/go/1.9.2/libexec/src/cert.pem", "/usr/local/Cellar/go/1.9.2/libexec/src/key.pem"))
+}
+func ShowRequestInfoHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprintf(w, "Method: %s\n", r.Method)
+	fmt.Fprintf(w, "Protocol: %s\n", r.Proto)
+	fmt.Fprintf(w, "Host: %s\n", r.Host)
+	fmt.Fprintf(w, "RemoteAddr: %s\n", r.RemoteAddr)
+	fmt.Fprintf(w, "RequestURI: %q\n", r.RequestURI)
+	fmt.Fprintf(w, "URL: %#v\n", r.URL)
+	fmt.Fprintf(w, "Body.ContentLength: %d (-1 means unknown)\n", r.ContentLength)
+	fmt.Fprintf(w, "Close: %v (relevant for HTTP/1 only)\n", r.Close)
+	fmt.Fprintf(w, "TLS: %#v\n", r.TLS)
+	fmt.Fprintf(w, "\nHeaders:\n")
+	r.Header.Write(w)
+}
+
+
+
+reference：
+http://blog.csdn.net/wangshubo1989/article/details/78603052
+https://mp.weixin.qq.com/s/IlSqAc9k0mIWdlc92VGddw
