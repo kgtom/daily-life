@@ -1,0 +1,32 @@
+socket API原本是为网络通讯设计的,也可以用于同一台主机的进程间通讯，但后来在socket的框架上发展出一种IPC机制，就是UNIX Domain Socket，它用于IPC更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。
+
+IPC机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。
+UNIX Domain Socket也提供面向流和面向数据包两种API接口，类似于TCP和UDP，但是面向消息的UNIX Domain Socket也是可靠的，消息既不会丢失也不会顺序错乱。
+
+
+// 创建一个Unix domain soceket
+socket, _ := net.Listen("unix", "/tmp/keyword_match.sock")
+// 关闭时删除绑定的文件
+defer syscall.Unlink("/tmp/keyword_match.sock") 
+// 无限循环监听和受理客户端请求
+for {
+    client, _ := socket.Accept()
+    
+    buf := make([]byte, 1024)
+    data_len, _ := client.Read(buf)
+    data := buf[0:data_len]
+    msg := string(data)
+    
+    matched := trie.Match(tree, msg)
+    response := []byte("[]") // 给响应一个默认值
+    if len(matched) > 0 {
+        json_str, _ := json.Marshal(matched)
+        response = []byte(string(json_str))
+    }
+    _, _ = client.Write(response)
+}
+
+
+reference:
+http://www.cnblogs.com/zhenbianshu/p/7265415.html
+https://www.cnblogs.com/chekliang/p/3222950.html
