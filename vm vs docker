@@ -1,1 +1,11 @@
 
+最根本区别：docker是轻量的，体现在秒级启动和占有系统资源少，开销小(共用宿主机的操作系统)
+
+VM： vm多了一层guest OS，Hypervisor会对硬件资源进行虚拟化，docker直接使用硬件资源，所以资源利用率相对docker低.
+     应用在
+     
+Docker:Docker守护进程取代了Hypervisor，它是运行在操作系统之上的后台进程，负责管理Docker容器,可以直接与主操作系统进行通信，
+      为各个Docker容器分配资源；它还可以将容器与主操作系统隔离，并将各个容器互相隔离.
+      
+
+reference：https://www.zhihu.com/question/48174633
