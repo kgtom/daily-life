@@ -17,8 +17,17 @@ SOA：解决是企业高层业务领域的整合问题，例如： ERP、CRM、H
  例如：订单模块，所有访问订单模块的数据，通过facade模式,隐藏实现细节，提供API，保证业务高内聚
                订单模块访问其它模块数据，通过proxy模式，不直接使用订单对象，降低了系统耦合度
                
-               
-reference：https://www.zhihu.com/question/37808426
+第三 如何解决分布式事务？（不用分布式事务之前，让 下单和库存两者放在一个db中，使用本地事务。）
+
+  1.使用消息系统(nsq、mq等)
+   订单系统A---》 消息系统M  ---》 库存系统B 和记录已处理的订单C(两者一个事务)
+   
+讲解：A下单成功后，向M存储一笔信息，该消息通知B库存减少，通知B之前，
+      先检查一下C中是否已经处理了过这个订单A的数量，如果没有处理，则处理B并且在C中加一笔数据，B和C一个事务中。
+ 2.
+reference：
+https://www.zhihu.com/question/37808426
+github.com/hyperledger/fabric/core/chaincode/shim
                
  
 
