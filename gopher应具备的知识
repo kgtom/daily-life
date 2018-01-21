@@ -1,4 +1,6 @@
-reference：https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
+reference：
+https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
+http://blog.csdn.net/nszkadrgg/article/details/8471679
 具备的知识分类：
 1.通用问题
 2.开放式问题
@@ -30,7 +32,12 @@ reference：https://www.zhihu.com/question/67846139?utm_source=wechat_session&ut
  非实时操作系统：目前用的Linux Windows 
 7.实时语言和堆内存分配之间的关系是什么？
   堆:程序员 new/make 分配并手动回收或者GC回收，栈：局部变量、参数使用，先进后出。
-8.什么是O/R阻抗失衡,与OO关系？
-
+8.什么是O/R阻抗失衡,与ORMapping关系？
+ ORM:面向对象描述业务，关系型数控管理数据的存储，面向对象的对象模型和关系型数据库的数据结构之间的相互转换。
+ O/R阻抗失衡(O/R Impedance Mismatch)：指的是OO对象模型和关系型数据库的数据结构之间的，设计理念上的差异。
+ OO专家认为业务是最重要的，数据服务与业务。遵循SOLID原则
+ 数据库专家认为数据是一个公司财富，保证数据的稳定性。
+ 最终：两者需要相辅相成，oo 常规使用一对一，一对多关心 去映射db.
+ 
 
 
