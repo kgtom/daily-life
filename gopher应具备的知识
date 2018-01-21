@@ -29,7 +29,8 @@ reference：https://www.zhihu.com/question/67846139?utm_source=wechat_session&ut
  实时操作系统：对外部请求及时响应，响应时间是最重要的指标，例如 vsWorks, 军工、航天工业上应用、汽车安全气囊、导弹发射器，
  非实时操作系统：目前用的Linux Windows 
 7.实时语言和堆内存分配之间的关系是什么？
-
+  堆:程序员 new/make 分配并手动回收或者GC回收，栈：局部变量、参数使用，先进后出。
+8.什么是O/R阻抗失衡,与OO关系？
 
 
 
