@@ -43,6 +43,10 @@ http://blog.csdn.net/nszkadrgg/article/details/8471679
  更新缓存还是删除缓存，取决于业务的复杂度，如果获取用户常旅客信息，两者都很简单。
  执行写操作：先淘汰缓存，再写数据库，原因：减少对业务的影响为原则。
  缓存架构设计：常规做法，api 接入，先访问cache，再访问db;另一种做法：写走db,读走cache，db和cache做异步同步。
+ 10.TCP/IP和HTTP有什么区别？
+ http 应用层，负责用户UI，依赖于tcp传输层，保证数据可靠有序的传输，tcp依赖于ip,ip网络地址，提供端到端的传输
+ 11.在客户端渲染(client-side rendering)和服务端渲染(server-side rendering)之间，你是如何权衡的？
+ 
  
 
 
