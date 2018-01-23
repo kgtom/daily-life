@@ -46,6 +46,9 @@ http://blog.csdn.net/nszkadrgg/article/details/8471679
  10.TCP/IP和HTTP有什么区别？
  http 应用层，负责用户UI，依赖于tcp传输层，保证数据可靠有序的传输，tcp依赖于ip,ip网络地址，提供端到端的传输
  11.在客户端渲染(client-side rendering)和服务端渲染(server-side rendering)之间，你是如何权衡的？
+    前端渲染：后端返回json,前端加载css\js ,渲染模板，加载相对后端渲染慢，SEO差，编码效率高，前后端各司其职。
+    后端渲染：后端直接生成html,前端显示，加载速度快，SEO效果好,前后端代码混合，可维护性不好，占有服务端资源
+    自己选择：根据业务，需要快速响应，不涉及页面交互的，后端来做，其它交给前端。
  
  
 
