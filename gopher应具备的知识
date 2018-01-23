@@ -1,6 +1,7 @@
 reference：
 https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
 http://blog.csdn.net/nszkadrgg/article/details/8471679
+https://www.zhihu.com/question/39324847
 具备的知识分类：
 1.通用问题
 2.开放式问题
@@ -49,6 +50,8 @@ http://blog.csdn.net/nszkadrgg/article/details/8471679
     前端渲染：后端返回json,前端加载css\js ,渲染模板，加载相对后端渲染慢，SEO差，编码效率高，前后端各司其职。
     后端渲染：后端直接生成html,前端显示，加载速度快，SEO效果好,前后端代码混合，可维护性不好，占有服务端资源
     自己选择：根据业务，需要快速响应，不涉及页面交互的，后端来做，其它交给前端。
+12.如何在一个不可靠的协议之上构建一个可靠的通信协议？
+
  
  
 
