@@ -142,3 +142,6 @@ func GetInstance() *singleton {
     }
     return instance
 }
+
+第四 代码相关：
+1.设计和架构有什么区别
