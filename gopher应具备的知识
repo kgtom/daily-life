@@ -105,3 +105,40 @@ TCP中，序列号和ACK应答号有哪些作用？
    使用实体管理器的对象持久化到数据库。
  5.空对象模式(Null Object Pattern)的目的是什么？
    加强系统的稳固性，能有有效地防止空指针报错对整个系统的影响，不要客户端做判断。
+ 6.单例模式 线程安全及线程不安全两种？
+ 线程安全：使用 sync.Once
+ package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type singleton struct {
+	No string
+}
+
+var instance *singleton
+var once sync.Once
+
+func GetInstance() *singleton {
+	once.Do(func() {
+		instance = &singleton{No: "i am the first!"}
+	})
+	return instance
+}
+func (s *singleton) Test() {
+	fmt.Println(s.No)
+}
+func main() {
+	s := GetInstance()
+	s.Test()
+}
+
+线程不安全：
+func GetInstance() *singleton {
+    if instance == nil {
+        instance = &singleton{}   //危险之处
+    }
+    return instance
+}
