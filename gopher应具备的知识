@@ -172,5 +172,11 @@ func GetInstance() *singleton {
   db中空值(null)与空字符('') 不同，
   null :应该使用：where field is null / is not null ，mysql3.23支持 <> null
   '' ：应该使用 where field == '' / <>''
+ 3.关系型db的ACID 及非关系db CAP和最终一致性原则的理解？
+ 关系型db:采用关系模式、主外键的关联的二维表，支持事务，遵循ACID原则，支持sql，利于复杂查询，但在高并发、海量数据的读写性能较差。
+ ACID：Atomic原子性要么成功要么失败；Consistent一致性:业务的一致性,所有操作符合当时期望；Isolated隔离性并发时数据隔离处理，互不影响；Durable持久性数据一旦提交持久存在
+ 非关系型db:采用键值对存储，实际是一个数据结构，不支持ACID，使用分布式方案处理，遵循CAP原则，不用经过sql解析，读写性能高，但不支持事务。
+ CAP:Consistent一致性分布式系统中所有地方的 数据一致性；Available可用性 每一个节点都可以使用；Partition Tolerant分区容错性两处数据复制时，发送错误有容错方案。
+ 分布式事务：遵循CAP，数据一致性，区别于ACID一致性，在于这里指数据的一致性：分为 强一致性 弱一致性及最终的一致性(dns).
  
 
