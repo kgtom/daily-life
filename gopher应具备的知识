@@ -168,5 +168,9 @@ func GetInstance() *singleton {
  1.mysql 迁移pg
  mysql2pg:https://github.com/the4thdoctor/pg_chameleon
  pg2mysql:https://github.com/pivotal-cf/pg2mysql
+ 2.为什么SELECT * FROM table WHERE field = null不能匹配空的字段？ 
+  db中空值(null)与空字符('') 不同，
+  null :应该使用：where field is null / is not null ，mysql3.23支持 <> null
+  '' ：应该使用 where field == '' / <>''
  
 
