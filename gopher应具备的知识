@@ -1,4 +1,5 @@
 reference：
+http://blog.csdn.net/java_4_ever/article/details/42489499
 http://blog.csdn.net/sigangjun/article/details/47786333
 http://blog.csdn.net/code_thinking/article/details/41744875
 http://blog.csdn.net/pg_roger/article/details/22066025
@@ -194,5 +195,7 @@ func GetInstance() *singleton {
 活锁：是指线程1可以使用资源，但它很礼貌，让其他线程先使用资源，线程2也可以使用资源，但它很绅士，也让其他线程先使用资源。这样你让我，我让你，最后两个线程都无法使用资源。例如：2辆车在一条路上，互相让行
 饥饿：是指如果线程T1占用了资源R，线程T2又请求封锁R，于是T2等待。T3也请求资源R，当T1释放了R上的封锁后，系统首先批准了T3的请求，T2仍然等待。然后T4又请求封锁R，当T3释放了R上的封锁之后，系统又批准了T4的请求......，T2可能永远等待
      例如：交警指挥四个方向来车，先让三方走，另一方持续等待
-3.Wait-Free算法 理解
+3.Lock-free VS wait-free ？
+无锁系统是相对于多个线程来说的，当其中一个线程阻塞的时候，其他线程可以继续运行，相互不影响。案例：RethinkDB
+无等待系统更像是针对一个线程来说的，该线程在运行过程中不会被任何运算所阻塞。案例：Linux kernel的无锁页面缓存
 
