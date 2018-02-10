@@ -1,11 +1,4 @@
-reference：
-http://blog.csdn.net/java_4_ever/article/details/42489499
-http://blog.csdn.net/sigangjun/article/details/47786333
-http://blog.csdn.net/code_thinking/article/details/41744875
-http://blog.csdn.net/pg_roger/article/details/22066025
-https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
-http://blog.csdn.net/nszkadrgg/article/details/8471679
-https://www.zhihu.com/question/39324847
+
 前言：一个问题的解决方案，是在某一个历史时期的某一个场景下的最优解，随着时间的推移，新的技术产生，问题解决方案也就多样化了。
 
 具备的知识分类：
@@ -198,4 +191,45 @@ func GetInstance() *singleton {
 3.Lock-free VS wait-free ？
 无锁系统是相对于多个线程来说的，当其中一个线程阻塞的时候，其他线程可以继续运行，相互不影响。案例：RethinkDB
 无等待系统更像是针对一个线程来说的，该线程在运行过程中不会被任何运算所阻塞。案例：Linux kernel的无锁页面缓存
+
+第九分布式问题：
+1.远程过程调用的通用缺点是什么？既然有http 请求，为什么还要用rpc调用？
+通俗的讲：
+http好比普通话，rpc好比团伙内部黑话。
+讲普通话，好处就是谁都听得懂，谁都会讲。
+讲黑话，好处是可以更精简、更加保密、更高效、可定制，坏处就是要求“说”黑话的那一方（client端）也要懂，而且一旦大家都说一种黑话了，换黑话就困难了。
+
+应用场景：对内部rpc使用grpc 二进制传输，相比http json 序列化、反序列化大大提高了传输速率， 对外 http 。
+rpc最关键的地方有请求体的封装，响应体的封装以及客户端调用的封装。
+RPC是一种编程模式，把对服务器的调用抽象为过程调用，通常还伴随着框架代码自动生成等功能。
+使用RPC做网络服务开发时，通常只需要实现服务器端的一个处理函数，其余的客户端调用，序列化反序列化，方法派发（收到什么样的消息，调用服务器端的什么函数）等都由框架或者生成的代码来完成，
+较大地减轻了网络服务开发和调用的复杂性。
+HTTP是一种应用层网络协议，RPC可以采用自定义协议，也可以通过HTTP协议来传输，thrift，grpc，xml-rpc，json-rpc都是通过HTTP传输的。
+HTTP既支持长连接，也支持短连接。
+
+rpc是远程过程调用，其调用协议通常包含传输协议和编码协议。
+传输协议包含: 如著名的 [gRPC](grpc / grpc.io) 使用的 http2 协议，也有如dubbo一类的自定义报文的tcp协议。
+编码协议包含: 如基于文本编码的 xml json，也有二进制编码的 protobuf binpack 等。
+为什么要使用自定义 tcp 协议的 rpc 做后端进程通信？
+要解决这个问题就应该搞清楚 http 使用的 tcp 协议，
+和我们自定义的 tcp 协议在报文上的区别。
+  首先要否认一点 http 协议相较于自定义tcp报文协议，增加的开销在于连接的建立与断开。http协议是支持连接池复用的，也就是建立一定数量的连接不断开，并不会频繁的创建和销毁连接。
+  其次要说的是http也可以使用protobuf这种二进制编码协议对内容进行编码，
+  因此二者最大的区别还是在传输协议上。通用定义的http1.1协议的tcp报文包含太多废信息，报文元数据就是header头的键值对却用了文本编码，非常占字节数。
+  
+ 2.
+
+
+
+
+reference：
+https://www.zhihu.com/question/41609070
+http://blog.csdn.net/java_4_ever/article/details/42489499
+http://blog.csdn.net/sigangjun/article/details/47786333
+http://blog.csdn.net/code_thinking/article/details/41744875
+http://blog.csdn.net/pg_roger/article/details/22066025
+https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
+http://blog.csdn.net/nszkadrgg/article/details/8471679
+https://www.zhihu.com/question/39324847
+
 
