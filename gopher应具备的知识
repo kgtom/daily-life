@@ -227,11 +227,18 @@ rpc是远程过程调用，其调用协议通常包含传输协议和编码协�
   
  
  3.网络分裂(network partitions)后有的几种恢复的方法？
-
+  一种在系统的任何两个组之间的所有网络连接同时发生故障后所出现的情况。
+  发生这种情况时，分裂的系统双方都会从对方一侧重新启动应用程序，进而导致重复服务或裂脑。
+  如果一个群集中配置的两个独立系统具有对指定资源（通常是文件系统或卷）的独占访问权限，则会发生裂脑情况。
+  由网络分裂造成的最为严重的问题是它会影响共享磁盘上的数据。
+  恢复方式：todo
+  
+ 4.分布式计算中有哪些谬论？
 
 
 
 reference：
+https://baike.baidu.com/item/Network%20Partition/8720737?fr=aladdin
 http://blog.csdn.net/micro_hz/article/details/78632108
 https://www.zhihu.com/question/41609070
 http://blog.csdn.net/java_4_ever/article/details/42489499
