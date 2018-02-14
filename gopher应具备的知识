@@ -234,10 +234,21 @@ rpc是远程过程调用，其调用协议通常包含传输协议和编码协�
   恢复方式：todo
   
  4.分布式计算中有哪些谬论？
+ 八大谬论：
+The network is reliable:网络是不可靠的，网络抖动，需要重试机制、幂等
+Latency is zero：
+Bandwidth is infinite.
+The network is secure.
+Topology doesn't change.
+There is one administrator.
+Transport cost is zero.
+The network is homogeneous
 
+5.你在什么时候会使用Request/Response模式，什么时候使用Publish/Subscribe模式？
 
 
 reference：
+https://www.jianshu.com/p/56e9f83fdd06
 https://baike.baidu.com/item/Network%20Partition/8720737?fr=aladdin
 http://blog.csdn.net/micro_hz/article/details/78632108
 https://www.zhihu.com/question/41609070
