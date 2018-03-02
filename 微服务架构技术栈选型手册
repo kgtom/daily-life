@@ -17,6 +17,8 @@
 http: Spring Boot/Cloud
 rpc: Dubbo 和grpc
 
+第四 运行时支撑服务选型
+运行时支撑服务主要包括服务注册中心，服务路由网关和集中式配置中心三个产品。
 
 reference:
 http://www.infoq.com/cn/articles/micro-service-technology-stack
