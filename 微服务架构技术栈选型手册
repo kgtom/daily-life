@@ -29,5 +29,16 @@ Consul的不同之处在于无需第三方工具就可以原生支持多数据�
 服务路由网关:
 配置中心:
 
+第五 服务安全选型：
+API网关统一处理。
+
+token+rq--->api网关 JWT获取用户信息---->后台服务器
+
+第五 服务部署平台选型
+k8s/rancher 、docker 、ci
+
+CI jenkins-->image--->私有云---->k8s/rancher
+
+
 reference:
 http://www.infoq.com/cn/articles/micro-service-technology-stack
