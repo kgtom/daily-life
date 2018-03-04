@@ -19,6 +19,15 @@ rpc: Dubbo 和grpc
 
 第四 运行时支撑服务选型
 运行时支撑服务主要包括服务注册中心，服务路由网关和集中式配置中心三个产品。
+服务注册中心:
+Zookeeper是这种类型的项目中历史最悠久的之一，它起源于Hadoop，帮助在Hadoop集群中维护各种组件.
+etcd是一个采用HTTP协议的健/值对存储系统，它是一个分布式和功能层次配置系统，可用于构建服务发现系统。
+其很容易部署、安装和使用，提供了可靠的数据持久化特性。它是安全的并且文档也十分齐全。
+Consul的不同之处在于无需第三方工具就可以原生支持多数据中心和健康检查，这并不意味着使用第三方工具不好
+(reference:https://studygolang.com/articles/4837)
+
+服务路由网关:
+配置中心:
 
 reference:
 http://www.infoq.com/cn/articles/micro-service-technology-stack
