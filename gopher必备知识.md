@@ -250,13 +250,23 @@ The network is homogeneous
 
 reference：
 https://www.jianshu.com/p/56e9f83fdd06
+
 https://baike.baidu.com/item/Network%20Partition/8720737?fr=aladdin
+
 http://blog.csdn.net/micro_hz/article/details/78632108
+
 https://www.zhihu.com/question/41609070
+
 http://blog.csdn.net/java_4_ever/article/details/42489499
+
 http://blog.csdn.net/sigangjun/article/details/47786333
+
 http://blog.csdn.net/code_thinking/article/details/41744875
+
 http://blog.csdn.net/pg_roger/article/details/22066025
+
 https://www.zhihu.com/question/67846139?utm_source=wechat_session&utm_medium=social
+
 http://blog.csdn.net/nszkadrgg/article/details/8471679
+
 https://www.zhihu.com/question/39324847
