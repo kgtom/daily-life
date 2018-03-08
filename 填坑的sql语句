@@ -1,0 +1,10 @@
+1. 例如：name:F0101李先生---->F0101 李先生，加个空格
+
+	update table set name =concat ( substr( name, 1, 5 ), ' ',substr(name,6,LENGTH(name)-5 )) where id=1
+  
+2.替换：C--->D
+
+
+select REPLACE(code,'TEST-CWZL-C-','TEST-CWZL-D-') from table WHERE company_id=4 
+
+update resource_items set code =REPLACE(code,'TEST-CWZL-C-','TEST-CWZL-D-') WHERE company_id=4 
