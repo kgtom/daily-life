@@ -1,0 +1,150 @@
+一：安装PostgreSQL
+
+地址：https://www.postgresql.org/download/macosx/
+下载：Postgres.app
+
+ 安装过程中需要为超级管理员制定密码，请牢记。
+
+ 
+
+二：安装PgAdmin或者Navicate Preminum 
+
+ 进行数据库的图形化操作。
+
+ 
+
+三：安装PyCharm
+
+下载安装PyCharm。
+
+ 
+
+四：搭建环境
+
+1：安装HomeBrew
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+2：安装python
+
+brew update # brew install python
+3：安装Pillow所需依赖
+
+brew install freetype jpeg libpng libtiff webp xz
+4：安装node
+
+brew install node
+5：安装less和 less-plugin-clean-css
+
+sudo npm install -g less less-plugin-clean-css
+ 
+
+五：下载odoo
+
+git clone https://github.com/odoo/odoo.git -b 10.0 --depth=1
+ 
+
+六：配置项目解释器
+
+    用PyCharm打开第五步下载的odoo10目录，点击 PyCharam——Preference——Project Interpreter——Add local——New Environment——Base Interpreter：选中brew安装的python(/usr/local/bin/python2.7)——不要勾选下面的 Inherit global site-packages，可以勾选 自动在其他项目可见。
+
+ 
+
+七：安装Odoo10依赖包
+
+    1）智能安装：一般，配置好项目解释器后，PyCharm都会自动检测到依赖，并且在菜单栏下面弹出提示，此时，点击  “Install requirement”即可自动安装。
+
+    2）手动安装：
+
+sudo easy_install pip   //安装pip
+pip install -r requirements.txt   //安装odoo依赖包
+     【注：psycopg2==2.6.2 安装失败的解决办法：把它从 requirement.txt 删掉。然后在 pycharm的Terminal中使用 pip install psycopg 安装最新版即可。其他类似报错类似】
+
+ 
+
+八：创建数据库登陆角色
+
+    打开PgAdmin，连接到本地数据库。在下方 “登录角色” 处右键，新增  登陆角色 【切记  权限 一项勾选 可以创建数据库，否则odoo不能通过此用户创建数据库】
+
+ 
+
+九：配置项目运行选项
+
+    用PyCharm打开项目，然后在 Run 菜单下，选择  Edit Configurations  ，添加运行选项：
+
+复制代码
+1:Script Path ：选择odoo10目录下某个.py文件，一般为 start.py、odoo-bin.py等等名称。
+
+2:Parameters：配置启动参赛，可以通过一个文本文件来指定。参数形式主要有：
+   -c 使用某个配置文件来制定启动，文件中一般：指明了数据库ip、数据库端口号、数据库登陆角色、登录密码、数据库过滤......
+   -u 更新某个数据库
+   -d 指定使用某个数据库
+   ...
+复制代码
+ 
+
+十：编写配置文件
+
+复制代码
+environment = dev
+
+##### 数据库配置 #####
+db_host = localhost               #1:改db地址
+db_user =                     
+db_password =               
+#dbfilter = odoo                     
+db_port = 5432                       
+db_maxconn = 10                #最大连接数
+longpolling_port = 8072       #长轮询端口：即时消息功能要用到
+xmlrpc_port = 8069
+
+#data_dir =   #2:注释掉这两行
+#logfile = 
+logrotate = True                     #日志滚动，日志文件满了自动新建一个文件存放日志
+proxy_mode = False               #代理模式：生产环境下会启用
+admin_passwd =                   #管理员密码：通过odoo创建新数据库时需要输入正确的管理员密码才运行创建
+no_database_list = False        #多数据库时禁止看到其他数据库
+workers =                            #进程数
+
+##### ADDONS目录配置 #####
+addons_path =                     #3:修改为自己的项目addons目录路径
+
+##### 后台进程配置 #####
+max_cron_threads =           #最大后台进程数：如定时任务等
+
+
+##### 日志相关配置##### 
+### 日志选项有: 'info', 'debug_rpc', 'warn', 'test', 'critical', 'debug_sql', 'error', 'debug', 'debug_rpc_answer', 'notset' ###
+log_handler = [':DEBUG']             #4:改为DEBUG
+log_level = debug                       #5:改为debug,否则看不到控制台日志信息
+复制代码
+ 
+
+十一：运行odoo
+
+    点击 pycharm的  运行  按钮，启动odoo。
+
+    在浏览器输入：localhost:8069 ,进入odoo。
+
+    第一次登陆时，需要创建数据库。
+
+ 
+
+十二：搭建过程中的常见问题
+
+    
+
+复制代码
+安装过程问题：
+nomodules name passlib等等多个地方import报错：运行pip install -r requirement.txt安装依赖
+psycopg2报错：从requirement.txt中删掉psycopg2，使用pip install psycopg2单独安装
+没有代码提示、odoo相关import报错：右键odoo-10、xx_app 目录——>Make Directory as Sources root
+No modules name "web_kanban" ：addons路径配置错误，将odoo-10的addons路径配置好即可
+
+项目解释器：使用 /usr/local/bin/python2.7(自己安装的python)【系统自动的是/usr/bin/python】
+
+运行odoo后控制台没有日志信息：配置文件日志级别设置为debug
+复制代码
+ 
+reference:
+https://www.cnblogs.com/ygj0930/p/8399014.html
+http://www.odoomk.com/documentation/10.0/index.html
