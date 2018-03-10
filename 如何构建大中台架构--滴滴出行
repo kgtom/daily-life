@@ -1,0 +1,7 @@
+reference:
+https://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653549284&idx=1&sn=bd1ba096c48e06da4947621bc3663829&chksm=813a637cb64dea6adb2cf4365041203a9ef741282e93efb314b805c4778964dd3d5410988459&scene=21#wechat_redirect
+
+学习到以下几点：
+1.服务化：拆分api，注意各个api服务之间协议、规范及粗粒度
+2.异步化：核心的主流程会变简洁。对非核心的逻辑在事件上做订阅之后，进行二级处理。
+3.
