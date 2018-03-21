@@ -1,0 +1,11 @@
+
+场景：
+有三个服务，一个是订单服务orderService，
+一个是报表服务（reportService），一个是推送服务（pushService），每个服务都横向部署在2个节点上。
+报表服务每天凌晨12点需要从订单服务拉取订单数据并生成报表，并且在每天早上8点通过推送服务向用户发送新生成的数据报表，需要如何设计这个流程？
+
+设计：
+
+
+reference:
+https://mp.weixin.qq.com/s/vAb9TVAyiCYsmLNPQLDxpw
