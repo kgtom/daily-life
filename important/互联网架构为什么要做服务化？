@@ -1,0 +1,18 @@
+
+1.有服务层之前：业务方访问用户数据，需要通过DAO拼装SQL访问
+
+有服务层之后：业务方通过RPC访问用户数据，就像调用一个本地函数一样，非常之爽
+
+User = UserService::GetUserById(uid);
+
+传入一个uid，得到一个User实体，就像调用本地函数一样，不需要关心序列化，网络传输，后端执行，网络传输，范序列化等复杂性。
+
+2.所有user数据的存取，都通过user-service来进行，代码只此一份，不存在拷贝。
+
+升级一处升级，bug修改一处修改。
+
+3.屏蔽底层实现复杂度
+4.
+
+reference:
+https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&mid=2651959519&idx=1&sn=065074b135fc9cb243abe897261e1a72&scene=21#wechat_redirect
