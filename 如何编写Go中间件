@@ -1,4 +1,7 @@
 
+总结：
+1.区分业务代码和非业务代码
+2.获取请求、修改请求、响应消息的处理
 
 reference:
 https://mp.weixin.qq.com/s/-nRWwy8SjW1TlqCglL0CAQ
