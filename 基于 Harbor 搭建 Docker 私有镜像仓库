@@ -1,0 +1,14 @@
+
+1.Harbor 是什么？
+Harbor 就是一个用于存储和分发 Docker 镜像的企业级Registry 服务器。
+
+2.做什么？
+镜像的存储harbor使用的是官方的docker registry服务去完成，至于registry是用本地存储或者s3都是可以的，harbor的功能是在此之上提供用户权限管理、镜像复制等功能，提高使用的registry的效率
+
+3.Harbor与k8s
+k8s默认容器Docker,Docker的镜像仓库配置成harbor，在容器启动是会拉取harbor中的镜像,拉取的时候根据用户权限进行操作，默认https方式。
+
+
+reference:
+http://mp.weixin.qq.com/s/l0NCrc2eTv8theZtTFLg2A
+https://blog.csdn.net/u010278923/article/details/77941995
