@@ -1,0 +1,16 @@
+
+
+Redis常见的几种主要使用方式：
+
+Redis 单副本
+
+Redis 多副本（主从）
+
+Redis Sentinel（哨兵）
+
+Redis Cluster
+
+Redis 自研
+目前我们用到的还是停留在 单副本，仅做缓存使用，好多redis优势待使用中。
+reference:
+https://mp.weixin.qq.com/s/BoLsVKYyu8yRXZbxd1uuQw
