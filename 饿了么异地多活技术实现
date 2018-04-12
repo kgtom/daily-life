@@ -1,4 +1,9 @@
 
+第一 异地多活背景：
+
+单个节点挂了，用集群；单个机房挂了，用多机房；整个地区网断，用多地机房；即：异地多活
+
+第二 如何实现：
 
 reference:
 https://mp.weixin.qq.com/s/pKAYR1GxbQH51RkgkpmcOg
