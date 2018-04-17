@@ -1,0 +1,11 @@
+
+工具： https://github.com/XeLabs/tokudb 
+
+root@localhost [zst]>LOAD DATA INFILE '/u01/work/134-136.txt' \
+INTO TABLE user_summary(user_id, weight, level, beat_rate,level_num);
+Query OK, 200000000 rows affected (5 min 48.30 sec)
+Records: 200000000  Deleted: 0  Skipped: 0  Warnings: 0
+
+
+reference:
+http://mp.weixin.qq.com/s/gmnS1vulxLCWgeyWglpkEQ
