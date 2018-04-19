@@ -25,5 +25,7 @@ Notify消息系统的设计需要解决以下几个问题：
 
 这里需要提一下Notify系统的消息分裂机制。考虑到有可能在一项业务执行过程中需要把消息发给多个接口，Notify消息在设计的时候引入了一个消息分裂的概念。
 
+6.针对单一MySQL实例问题，我们引入了MyCAT，MyCAT是阿里开发并维护的一款开源数据库中间件，实现了MySQL的分布式存储，提升了数据库性能，并且MySQL实例数量动态可扩展，最重要的是MyCAT可运行MySQL语句，因此与MySQL几乎无缝切换，开发成本小。
+
 reference:
 https://mp.weixin.qq.com/s/_-rEZHEjR_m68SB5cD3KgA
