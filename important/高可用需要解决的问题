@@ -1,0 +1,41 @@
+高可用问题：
+1.事务中不包含外部调用
+ 事务中是否存在RPC调用、HTTP调用、消息队列操作、缓存、循环查询等耗时的操作，这个操作应该移到事务之外，理想的情况是事务内只处理数据库操作。 
+ 
+2.对大事务添加监控报警。大事务发生时，会收到邮件和短信提醒，一般的报警标准是1s。
+
+3.设置合适超时时间及重试次数，我们超时>依赖方下游自己的超时，次数 3次。
+
+4.容错下游：对于我们依赖的下游要做熔断机制，不能一直死等。
+
+5.防御上游：对于依赖于我们的上游要做限流机制，不能毫无节制。压测选取合适的qps.
+
+6.code review明白每一段代码含义，弄清楚历史逻辑和临时逻辑
+
+7.去依赖，强依赖--->弱化依赖--->异步弱依赖
+
+8.慢查询的日志分析
+
+总结：研发规范、自身稳定、容错下游、防御上游。
+
+
+
+
+PS:
+
+慢查询：http://www.zsythink.net/archives/1260
+
+限流：漏桶算法、令牌桶算法(https://github.com/yangwenmai/ratelimit)
+计数器 是一种简单粗暴方式
+
+总结：http://www.blogjava.net/stevenjohn/archive/2016/06/14/430882.html
+
+推荐：Golang令牌桶（Token Bucket）限流的实现
+https://blog.imlibo.com/2016/06/20/golang-token-bucket/
+
+sql耗时分析：https://www.cnblogs.com/chenjiacheng/p/6877400.html
+总结：1、大表 左关联 小表，很慢；小表 左关联 大表，很快。2、走出自身的思想误区，应对底层有深入理解才能正确使用。
+
+
+reference:
+https://mp.weixin.qq.com/s/fx6XfBpuzozsJCvllMcCqw
