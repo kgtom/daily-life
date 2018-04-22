@@ -1,0 +1,6 @@
+git push 遇到：[remote rejected] master -> master (pre-receive hook declined)
+解决方案：
+
+please go to path/to/gogs-repositories/{owner}/{repo}.git and delete custom_hooks directory, then the problem should be solved.
+
+https://github.com/gogits/gogs/issues/4211#issuecomment-283185901
