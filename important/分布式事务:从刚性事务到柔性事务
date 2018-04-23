@@ -19,7 +19,8 @@
 2.将一些同步阻塞的事务操作变为异步的操作，避免对数据库事务的争用。比如热点资源的批量更新、异步更新的处理。
  a 、b 、c 提交到服务端，然后一并提交到DB执行。
 
- 
+ 总结：
+https://github.com/kgtom/daily-life/blob/c5a63c928de6cbc2a5db33f98acefd1d06be2541/soa%20vs%20microservice
 
 reference:
 https://mp.weixin.qq.com/s/X6yNVY2UmrXC511HWs7MKA
