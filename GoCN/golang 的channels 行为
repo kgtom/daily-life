@@ -1,0 +1,47 @@
+
+总结：
+1.三种状态： nil 、open 、close
+2.无缓冲：接收发生在发送之前，100%保证信号被接收。分两种：等待任务和等待结果
+
+ func waitForTask() {
+     ch := make(chan string)
+
+     go func() {
+        p := <-ch
+
+         // Employee performs work here.
+
+         // Employee is done and free to go.
+    }()
+
+     time.Sleep(time.Duration(rand.Intn(500)) * time.Millisecond)
+
+     ch <- "paper"
+ }
+
+
+ func waitForTask() {
+     ch := make(chan string)
+
+     go func() {
+        p := <-ch
+
+         // Employee performs work here.
+
+         // Employee is done and free to go.
+    }()
+
+     time.Sleep(time.Duration(rand.Intn(500)) * time.Millisecond)
+
+     ch <- "paper"
+ }
+
+3.有缓冲，发送发生在接收之前，降低信号之间的阻塞延迟
+
+4. Context +1个缓冲的channel配合使用，避免已经超时，执行取消函数，而另一方被堵塞，一直在发送产生的goroutine泄露。
+
+5.nil channels：发送和接受都堵塞
+
+6.关闭的 channels：发送端关闭，接收端使用断言判断是否接受完毕。
+reference:
+https://segmentfault.com/a/1190000014524388
