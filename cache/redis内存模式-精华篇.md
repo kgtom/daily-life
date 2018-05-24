@@ -141,10 +141,8 @@
 <p>列表（list）用来存储多个有序的字符串，每个字符串称为元素；一个列表可以存储2^32-1个元素。Redis中的列表支持两端插入和弹出，并可以获得指定位置（或范围）的元素，可以充当数组、队列、栈等。</p>
 <h3 id="（2）内部编码-1">（2）内部编码</h3>
 <p>列表的内部编码可以是压缩列表（ziplist）或双端链表（linkedlist）。</p>
-<p>双端链表：由一个list结构和多个listNode结构组成；典型结构如下图所示：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/4/27/16305c40979f41da?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
-<p>图片来源：《Redis设计与实现》</p>
-<p>通过图中可以看出，双端链表同时保存了表头指针和表尾指针，并且每个节点都有指向前和指向后的指针；链表中保存了列表的长度；dup、free和match为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值。而链表中每个节点指向的是type为字符串的redisObject。</p>
+<p>双端链表：由一个list结构和多个listNode结构组成；双端链表同时保存了表头指针和表尾指针，并且每个节点都有指向前和指向后的指针；链表中保存了列表的长度；dup、free和match为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值。<br>
+而链表中每个节点指向的是type为字符串的redisObject。</p>
 <p>压缩列表：压缩列表是Redis为了节约内存而开发的，是由一系列特殊编码的<strong>连续内存块</strong>(而不是像双端链表一样每个节点是指针)组成的顺序型数据结构；具体结构相对比较复杂，略。与双端链表相比，压缩列表可以节省内存空间，但是进行修改或增删操作时，复杂度较高；因此当节点数量较少时，可以使用压缩列表；但是节点数量多时，还是使用双端链表划算。</p>
 <p>压缩列表不仅用于实现列表，也用于实现哈希、有序列表；使用非常广泛。</p>
 <h3 id="（3）编码转换-1">（3）编码转换</h3>
@@ -165,9 +163,6 @@
 <p>下面从底层向上依次介绍各个部分：</p>
 <p><strong>dictEntry</strong></p>
 <p>dictEntry结构用于保存键值对，结构定义如下：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5 6 7 8 9</p>
-<p><code>typedef</code>  <code>struct</code>  <code>dictEntry{</code>  <code>void</code>  <code>*key;</code>  <code>union``{</code>  <code>void</code>  <code>*val;</code>  <code>uint64_tu64;</code>  <code>int64_ts64;</code>  <code>}v;</code>  <code>struct</code>  <code>dictEntry *next;</code>  <code>}dictEntry;</code></p>
 <p>其中，各个属性的功能如下：</p>
 <ul>
 <li>key：键值对中的键；</li>
@@ -179,8 +174,6 @@
 <p>bucket是一个数组，数组的每个元素都是指向dictEntry结构的指针。redis中bucket数组的大小计算规则如下：大于dictEntry的、最小的2^n；例如，如果有1000个dictEntry，那么bucket大小为1024；如果有1500个dictEntry，则bucket大小为2048。</p>
 <p><strong>dictht</strong></p>
 <p>dictht结构如下：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5 6</p>
 <p><code>typedef</code>  <code>struct</code>  <code>dictht{</code>  <code>dictEntry **table;</code>  <code>unsigned``long</code>  <code>size;</code>  <code>unsigned</code> <code>long</code>  <code>sizemask;</code>  <code>unsigned</code> <code>long``used;</code>  <code>}dictht;</code></p>
 <p>其中，各个属性的功能说明如下：</p>
 <ul>
@@ -192,8 +185,6 @@
 <p><strong>dict</strong></p>
 <p>一般来说，通过使用dictht和dictEntry结构，便可以实现普通哈希表的功能；但是Redis的实现中，在dictht结构的上层，还有一个dict结构。下面说明dict结构的定义及作用。</p>
 <p>dict结构如下：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5 6</p>
 <p><code>typedef</code>  <code>struct</code>  <code>dict{</code>  <code>dictType *type;</code>  <code>void</code>  <code>*privdata;</code>  <code>dictht ht[2];</code>  <code>int</code>  <code>trehashidx;</code>  <code>} dict;</code></p>
 <p>其中，type属性和privdata属性是为了适应不同类型的键值对，用于创建多态字典。</p>
 <p>ht属性和trehashidx属性则用于rehash，即当哈希表需要扩展或收缩时使用。ht是一个包含两个项的数组，每项都指向一个dictht结构，这也是Redis的哈希会有1个dict、2个dictht结构的原因。通常情况下，所有的数据都是存在放dict的ht[0]中，ht[1]只在rehash的时候使用。dict进行rehash操作的时候，将ht[0]中的所有数据rehash到ht[1]中。然后将ht[1]赋值给ht[0]，并清空ht[1]。</p>
@@ -211,8 +202,6 @@
 <p>集合的内部编码可以是整数集合（intset）或哈希表（hashtable）。</p>
 <p>哈希表前面已经讲过，这里略过不提；需要注意的是，集合在使用哈希表时，值全部被置为null。</p>
 <p>整数集合的结构定义如下：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5</p>
 <p><code>typedef</code>  <code>struct</code>  <code>intset{</code>  <code>uint32_t encoding;</code>  <code>uint32_t length;</code>  <code>int8_t contents[];</code>  <code>} intset;</code></p>
 <p>其中，encoding代表contents中存储内容的类型，虽然contents（存储集合中的元素）是int8_t类型，但实际上其存储的值是int16_t、int32_t或int64_t，具体的类型便是由encoding决定的；length表示元素个数。</p>
 <p>整数集合适用于集合所有元素都是整数且集合元素数量较小的时候，与哈希表相比，整数集合的优势在于集中存储，节省空间；同时，虽然对于元素的操作复杂度也由O(n)变为了O(1)，但由于集合数量较少，因此操作的时间并没有明显劣势。</p>
@@ -258,15 +247,12 @@
 <p>bucket空间：bucket数组的大小为大于90000的最小的2^n，是131072；每个bucket元素为8字节（因为64位系统中指针大小为8字节）。</p>
 <p>因此，可以估算出这90000个键值对占据的内存大小为：90000<em>80 + 131072</em>8 = 8248576。</p>
 <p>下面写个程序在redis中验证一下：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</p>
-<p><code>public</code>  <code>class</code>  <code>RedisTest {</code>  <code>public</code>  <code>static</code>  <code>Jedis jedis =``new</code>  <code>Jedis(``"localhost"``, 6379);</code>  <code>public</code>  <code>static</code>  <code>void``main(String[] args) throws Exception{</code>  <code>Long m1 = Long.valueOf(getMemory());</code>  <code>insertData();</code>  <code>Long m2 = Long.valueOf(getMemory());</code>  <code>System.out.println(m2 - m1);``　　}</code>  <code>public</code>  <code>static</code>  <code>void</code>  <code>insertData(){</code>  <code>for``(``int``i = 10000; i &lt; 100000; i++){</code>  <code>jedis.set(``"aa"</code>  <code>+ i,``"aa"</code>  <code>+ i);</code> <code>//key和value长度都是7字节，且不是整数</code>  <code>}</code>  <code>}</code>  <code>public</code>  <code>static</code>  <code>String getMemory(){</code>  <code>String memoryAllLine = jedis.info(``"memory"``);</code>  <code>String usedMemoryLine = memoryAllLine.split(``"\r\n"``)[1];</code>  <code>String memory = usedMemoryLine.substring(usedMemoryLine.indexOf(``':'``) + 1);</code>  <code>return</code>  <code>memory;</code>  <code>}</code>  <code>}</code></p>
-<p>运行结果：8247552</p>
+<p><code>public</code>  <code>static</code>  <code>void</code>  <code>insertData(){</code>  <code>for``(``int``i = 10000; i &lt; 100000; i++){</code>  <code>jedis.set(``"aa"</code>  <code>+ i,``"aa"</code>  <code>+ i);</code> <code>//key和value长度都是7字节，且不是整数</code>  <code>}</code>  <code>}</code>  <code>public</code>  <code>static</code>  <code>String getMemory(){</code>  <code>String memoryAllLine = jedis.info(``"memory"``);</code>  <code>String usedMemoryLine = memoryAllLine.split(``"\r\n"``)[1];</code>  <code>String memory = usedMemoryLine.substring(usedMemoryLine.indexOf(``':'``) + 1);</code>  <code>return</code>  <code>memory;</code>  <code>}</code>  <code>}</code></p>
+<p>然后统计<strong>used_memory</strong><br>
+运行结果：8247552</p>
 <p>理论值与结果值误差在万分之1.2，对于计算需要多少内存来说，这个精度已经足够了。之所以会存在误差，是因为在我们插入90000条数据之前redis已分配了一定的bucket空间，而这些bucket空间尚未使用。</p>
 <p>作为对比将key和value的长度由7字节增加到8字节，则对应的SDS变为17个字节，jemalloc会分配32个字节，因此每个dictEntry占用的字节数也由80字节变为112字节。此时估算这90000个键值对占据内存大小为：90000<em>112 + 131072</em>8 = 11128576。</p>
 <p>在redis中验证代码如下（只修改插入数据的代码）：</p>
-<p><a href="https://juejin.im/entry/5ae2c177f265da0b722ad90b#">?</a></p>
-<p>1 2 3 4 5</p>
 <p><code>public</code>  <code>static</code>  <code>void</code>  <code>insertData(){</code>  <code>for``(``int</code>  <code>i = 10000; i &lt; 100000; i++){</code>  <code>jedis.set(``"aaa"</code>  <code>+ i,</code> <code>"aaa"</code>  <code>+ i);</code> <code>//key和value长度都是8字节，且不是整数</code>  <code>}</code>  <code>}</code></p>
 <p>运行结果：11128576；估算准确。</p>
 <p>对于字符串类型之外的其他类型，对内存占用的估算方法是类似的，需要结合具体类型的编码方式来确定。</p>
