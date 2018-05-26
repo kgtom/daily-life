@@ -80,6 +80,9 @@
 <p>每个小团队都包括自己：架构师、dev、ued、ops、dba,利于团队人员业务深入理解</p>
 <h2 id="四、搭建共享服务体系">四、搭建共享服务体系</h2>
 <blockquote>
+<p>即将上映</p>
+</blockquote>
+<blockquote>
 <p>reference:《企业IT架构转型之道》</p>
 </blockquote>
 
