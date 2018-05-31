@@ -31,10 +31,8 @@
 通过统一的数据架构消除数据交互的屏障</p>
 <p>所以，所有的原则和方法都是为了这个目标服务的，从三个维度出发进行设计，如果不能兼顾，就要抓住需要解决的主要矛盾</p>
 <blockquote>
-<p>设计:系统建设遵循面对对象的基本原则(<a href="https://blog.csdn.net/prohorse/article/details/62929400">SOLID</a>)]</p>
-</blockquote>
-<blockquote>
-<p>运营:完整的业务模型，要有数据运营和业务整合的价值，提供管理运营的方法和配套服务</p>
+<p>设计:系统建设遵循面对对象的基本原则(<a href="https://github.com/kgtom/daily-life/blob/master/books/oop%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99.md">SOLID</a><br>
+运营:完整的业务模型，要有数据运营和业务整合的价值，提供管理运营的方法和配套服务</p>
 </blockquote>
 <blockquote>
 <p>工程:基于分布式架构，虽然解决了一体化架构在大规模应用的问题，但是也引入了分布式事务的问题，所以拆分要慎重，不能图一时之快把业务拆分的非常彻底，到最后投入大量资源去解决技术上的问题。</p>
