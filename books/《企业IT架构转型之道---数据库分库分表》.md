@@ -51,6 +51,10 @@
 </li>
 </ol>
 <h3 id="三、注意事项">三、注意事项</h3>
+<ol>
+<li>数据尽可能平分</li>
+<li></li>
+</ol>
 <blockquote>
 <p>reference:<br>
 《企业IT架构转型之道》<br>
