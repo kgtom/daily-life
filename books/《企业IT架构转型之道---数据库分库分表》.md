@@ -15,8 +15,20 @@
 <h3 id="二、解决方案">二、<strong>解决方案</strong></h3>
 <p>即 <strong>分库分表</strong>：<br>
 一般作法按照Id哈希取模的方式拆分，还有结合数据结构和业务场景，有时候按照年份拆分。<br>
-库：按照业务维度垂直拆分。例如 用户user、支付pay、订单order、商品commodity等<br>
-表：表的行数超过200万行时，就会变慢，把一张的表的数据拆成多张表来存放。例如 user1 ,user2,user3。</p>
+分库：按照业务维度<strong>垂直拆分</strong>。例如 用户userDB、支付payDB、订单orderB、商品commodity等<br>
+分表有两种：</p>
+<ul>
+<li>
+<p>水平拆分：表的行数超过1000万行时，就会变慢，把一张的表的数据拆成多张表来存放。例如 user1 ,user2,user3。<br>
+它是将同一个表中的记录拆分到多个结构相同的表中。<br>
+当一个表的数据不断增多时，拆分 是必然的选择，它可以将数据分布到集群的不同节点上，从而缓存单个数据库的压力。<br>
+<a href="https://github.com/CyC2018/Interview-Notebook/blob/master/pics/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg"><img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/63c2909f-0c5f-496f-9fe5-ee9176b31aba.jpg" alt=""></a></p>
+</li>
+<li>
+<p>垂直拆分：将一张表按列切分成多个表，通常是按照列的关系密集程度进行切分。也可以利用垂直切分将经常被使用的列和不经常被使用的列切分到不同的表中。</p>
+</li>
+</ul>
+<p><img src="https://github.com/CyC2018/Interview-Notebook/raw/master/pics/e130e5b8-b19a-4f1e-b860-223040525cf6.jpg" alt=""></p>
 <p>** 水平拆分** 小技巧</p>
 <ol>
 <li>
@@ -63,6 +75,7 @@
 <p>reference:<br>
 《企业IT架构转型之道》<br>
 <a href="https://blog.csdn.net/zbuger/article/details/51177601">https://blog.csdn.net/zbuger/article/details/51177601</a><br>
-<a href="http://breezylee.iteye.com/blog/2348583">http://breezylee.iteye.com/blog/2348583</a></p>
+<a href="http://breezylee.iteye.com/blog/2348583">http://breezylee.iteye.com/blog/2348583</a><br>
+<a href="https://github.com/CyC2018/Interview-Notebook/blob/master/notes/MySQL.md#%E4%BA%94%E5%88%87%E5%88%86">https://github.com/CyC2018/Interview-Notebook/blob/master/notes/MySQL.md#五切分</a></p>
 </blockquote>
 
