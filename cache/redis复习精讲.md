@@ -3,23 +3,22 @@
 
 ---
 
-<h1 id="【原创】分布式之redis复习精讲"><a href="https://www.cnblogs.com/rjzheng/p/9096228.html">【原创】分布式之redis复习精讲</a></h1>
 <h2 id="引言">引言</h2>
 <h3 id="为什么写这篇文章">为什么写这篇文章?</h3>
-<p>博主的<a href="http://www.cnblogs.com/rjzheng/p/8994962.html">《分布式之消息队列复习精讲》</a>得到了大家的好评，内心诚惶诚恐，想着再出一篇关于复习精讲的文章。但是还是要说明一下，复习精讲的文章偏面试准备，真正在开发过程中，还是脚踏实地，一步一个脚印，不要投机取巧。<br>
-考虑到绝大部分写业务的程序员，在实际开发中使用redis的时候，只会setvalue和getvalue两个操作，对redis整体缺乏一个认知。又恰逢博主某个同事下周要去培训redis，所以博主斗胆以redis为题材，对redis常见问题做一个总结，希望能够弥补大家的知识盲点。</p>
+<p>考虑到绝大部分写业务的程序员，在实际开发中使用redis的时候，只会setvalue和getvalue两个操作，对redis整体缺乏一个认知。又恰逢博主某个同事下周要去培训redis，所以博主斗胆以redis为题材，对redis常见问题做一个总结，希望能够弥补大家的知识盲点。</p>
 <h3 id="复习要点">复习要点?</h3>
 <p>本文围绕以下几点进行阐述<br>
-1、为什么使用redis<br>
-2、使用redis有什么缺点<br>
-3、单线程的redis为什么这么快<br>
-4、redis的数据类型，以及每种数据类型的使用场景<br>
-5、redis的过期策略以及内存淘汰机制<br>
-6、redis和数据库双写一致性问题<br>
-7、如何应对缓存穿透和缓存雪崩问题<br>
-8、如何解决redis的并发竞争问题</p>
+1、<a href="#1">为什么使用redis</a><br>
+2、<a href="#2">使用redis有什么缺点</a><br>
+3、<a href="#3">单线程的redis为什么这么快</a><br>
+4、<a href="#4">redis的数据类型，以及每种数据类型的使用场景</a><br>
+5、<a href="#5">redis的过期策略以及内存淘汰机制</a><br>
+6、<a href="#6">redis和数据库双写一致性问题</a><br>
+7、<a href="#7">如何应对缓存穿透和缓存雪崩问题</a><br>
+8、<a href="#8">如何解决redis的并发竞争问题</a><br>
+9、<a href="#9">如何利用Redis分布式锁实现控制并发</a></p>
 <h2 id="正文">正文</h2>
-<h3 id="、为什么使用redis">1、为什么使用redis</h3>
+<h3 id="span-id11、为什么使用redisspan"><span id="1">1、为什么使用redis</span></h3>
 <p><strong>分析</strong>:博主觉得在项目中使用redis，主要是从两个角度去考虑:<strong>性能</strong>和<strong>并发</strong>。当然，redis还具备可以做分布式锁等其他功能，但是如果只是为了分布式锁这些其他功能，完全还有其他中间件(如zookpeer等)代替，并不是非要使用redis。因此，这个问题主要从性能和并发两个角度去答。<br>
 <strong>回答</strong>:如下所示，分为两点<br>
 <strong>（一）性能</strong><br>
@@ -34,7 +33,7 @@
 <strong>（二）并发</strong><br>
 如下图所示，在大并发的情况下，所有的请求直接访问数据库，数据库会出现连接异常。这个时候，就需要使用redis做一个缓冲操作，让请求先访问到redis，而不是直接访问数据库。<br>
 <img src="https://images.cnblogs.com/cnblogs_com/rjzheng/1202350/o_redis2.png" alt="image"></p>
-<h3 id="、使用redis有什么缺点">2、使用redis有什么缺点</h3>
+<h3 id="span-id22、使用redis有什么缺点span"><span id="2">2、使用redis有什么缺点<span></span></span></h3>
 <p><strong>分析</strong>:大家用redis这么久，这个问题是必须要了解的，基本上使用redis都会碰到一些问题，常见的也就几个。<br>
 <strong>回答</strong>:主要是四个问题<br>
 (一)缓存和数据库双写一致性问题<br>
@@ -42,7 +41,7 @@
 (三)缓存击穿问题<br>
 (四)缓存的并发竞争问题<br>
 这四个问题，我个人是觉得在项目中，比较常遇见的，具体解决方案，后文给出。</p>
-<h3 id="、单线程的redis为什么这么快">3、单线程的redis为什么这么快</h3>
+<h3 id="span-id33、单线程的redis为什么这么快span"><span id="3">3、单线程的redis为什么这么快<span></span></span></h3>
 <p><strong>分析</strong>:这个问题其实是对redis内部机制的一个考察。其实根据博主的面试经验，很多人其实都不知道redis是单线程工作模型。所以，这个问题还是应该要复习一下的。<br>
 <strong>回答</strong>:主要是以下三点<br>
 (一)纯内存操作<br>
@@ -76,7 +75,7 @@
 <img src="https://images.cnblogs.com/cnblogs_com/rjzheng/1202350/o_redis3.png" alt="image"><br>
 参照上图，简单来说，就是。我们的redis-client在操作的时候，会产生具有不同事件类型的socket。在服务端，有一段I/0多路复用程序，将其置入队列之中。然后，文件事件分派器，依次去队列中取，转发到不同的事件处理器中。<br>
 需要说明的是，这个I/O多路复用机制，redis还提供了select、epoll、evport、kqueue等多路复用函数库，大家可以自行去了解。</p>
-<h3 id="、redis的数据类型，以及每种数据类型的使用场景">4、redis的数据类型，以及每种数据类型的使用场景</h3>
+<h3 id="span-id44、redis的数据类型，以及每种数据类型的使用场景span"><span id="4">4、redis的数据类型，以及每种数据类型的使用场景<span></span></span></h3>
 <p><strong>分析</strong>：是不是觉得这个问题很基础，其实我也这么觉得。然而根据面试经验发现，至少百分八十的人答不上这个问题。建议，在项目中用到后，再类比记忆，体会更深，不要硬记。基本上，一个合格的程序员，五种类型都会用到。<br>
 <strong>回答</strong>：一共五种<br>
 (一)String<br>
@@ -90,7 +89,7 @@
 另外，就是利用交集、并集、差集等操作，可以<strong>计算共同喜好，全部的喜好，自己独有的喜好等功能</strong>。<br>
 (五)sorted set<br>
 sorted set多了一个权重参数score,集合中的元素能够按score进行排列。可以做<strong>排行榜应用，取TOP N操作</strong>。另外，参照另一篇<a href="https://www.cnblogs.com/rjzheng/p/8972725.html">《分布式之延时任务方案解析》</a>，该文指出了sorted set可以用来做<strong>延时任务</strong>。最后一个应用就是可以做<strong>范围查找</strong>。</p>
-<h3 id="、redis的过期策略以及内存淘汰机制">5、redis的过期策略以及内存淘汰机制</h3>
+<h3 id="span-id55、redis的过期策略以及内存淘汰机制span"><span id="5">5、redis的过期策略以及内存淘汰机制</span></h3>
 <p><strong>分析</strong>:这个问题其实相当重要，到底redis有没用到家，这个问题就可以看出来。比如你redis只能存5G数据，可是你写了10G，那会删5G的数据。怎么删的，这个问题思考过么？还有，你的数据已经设置了过期时间，但是时间到了，内存占用率还是比较高，有思考过原因么?<br>
 <strong>回答</strong>:<br>
 redis采用的是定期删除+惰性删除策略。<br>
@@ -112,10 +111,10 @@ redis采用的是定期删除+惰性删除策略。<br>
 5）volatile-random：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。<strong>依然不推荐</strong><br>
 6）volatile-ttl：当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。<strong>不推荐</strong><br>
 ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那么 volatile-lru, volatile-random 和 volatile-ttl 策略的行为, 和 noeviction(不删除) 基本上一致。</p>
-<h3 id="、redis和数据库双写一致性问题">6、redis和数据库双写一致性问题</h3>
+<h3 id="span-id66、redis和数据库双写一致性问题span"><span id="6">6、redis和数据库双写一致性问题</span></h3>
 <p><strong>分析</strong>:一致性问题是分布式常见问题，还可以再分为最终一致性和强一致性。数据库和缓存双写，就必然会存在不一致的问题。答这个问题，先明白一个前提。就是<strong>如果对数据有强一致性要求，不能放缓存。<strong>我们所做的一切，只能保证最终一致性。另外，我们所做的方案其实从根本上来说，只能说</strong>降低不一致发生的概率</strong>，无法完全避免。因此，有强一致性要求的数据，不能放缓存。<br>
-<strong>回答</strong>:<a href="https://www.cnblogs.com/rjzheng/p/9041659.html">《分布式之数据库和缓存双写一致性方案解析》</a>给出了详细的分析，在这里简单的说一说。首先，采取正确更新策略，先更新数据库，再删缓存。其次，因为可能存在删除缓存失败的问题，提供一个补偿措施即可，例如利用消息队列。</p>
-<h3 id="、如何应对缓存穿透和缓存雪崩问题">7、如何应对缓存穿透和缓存雪崩问题</h3>
+<strong>回答</strong>:首先，采取正确更新策略，先更新数据库，再删缓存。其次，因为可能存在删除缓存失败的问题，提供一个补偿措施即可，例如利用消息队列。</p>
+<h3 id="span-id77、如何应对缓存穿透和缓存雪崩问题span"><span id="7">7、如何应对缓存穿透和缓存雪崩问题</span></h3>
 <p><strong>分析</strong>:这两个问题，说句实在话，一般中小型传统软件企业，很难碰到这个问题。如果有大并发的项目，流量有几百万左右。这两个问题一定要深刻考虑。<br>
 <strong>回答</strong>:如下所示<br>
 <strong>缓存穿透</strong>，即黑客故意去请求缓存中不存在的数据，导致所有的请求都怼到数据库上，从而数据库连接异常。<br>
@@ -133,7 +132,7 @@ ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那
 <li>II A没有数据，直接从B读数据，直接返回，并且异步启动一个更新线程。</li>
 <li>III 更新线程同时更新缓存A和缓存B。</li>
 </ul>
-<h3 id="、如何解决redis的并发竞争key问题">8、如何解决redis的并发竞争key问题</h3>
+<h3 id="span-id88、如何解决redis的并发竞争key问题span"><span id="8">8、如何解决redis的并发竞争key问题</span></h3>
 <p><strong>分析</strong>:这个问题大致就是，同时有多个子系统去set一个key。这个时候要注意什么呢？大家思考过么。需要说明一下，博主提前百度了一下，发现答案基本都是推荐用redis事务机制。博主**不推荐使用redis的事务机制。**因为我们的生产环境，基本都是redis集群环境，做了数据分片操作。你一个事务中有涉及到多个key操作的时候，这多个key不一定都存储在同一个redis-server上。因此，<strong>redis的事务机制，十分鸡肋。</strong><br>
 **回答:**如下所示<br>
 (1)如果对这个key操作，<strong>不要求顺序</strong><br>
@@ -147,10 +146,56 @@ ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那
 </code></pre>
 <p>那么，假设这会系统B先抢到锁，将key1设置为{valueB 3:05}。接下来系统A抢到锁，发现自己的valueA的时间戳早于缓存中的时间戳，那就不做set操作了。以此类推。</p>
 <p>其他方法，比如利用队列，将set方法变成串行访问也可以。总之，灵活变通。</p>
+<h3 id="span-id99、如何利用redis分布式锁实现控制并发span"><span id="9">9、如何利用Redis分布式锁实现控制并发</span></h3>
+<h4 id="redis命令解释">redis命令解释</h4>
+<p>说道Redis的分布式锁都是通过setNx命令结合getset来实现的，在讲之前我们先了解下setNx和getset的意思，在redis官网是这样解释的<br>
+注：redis的命令都是原子操作</p>
+<h4 id="setnx-key-value">SETNX key value</h4>
+<p>将 key 的值设为 value ，当且仅当 key 不存在。<br>
+若给定的 key 已经存在，则 SETNX 不做任何动作。<br>
+SETNX 是『SET if Not eXists』(如果不存在，则 SET)的简写。<br>
+<strong>可用版本：</strong><br>
+1.0.0+<br>
+<strong>时间复杂度：</strong><br>
+O(1)<br>
+<strong>返回值：</strong><br>
+设置成功，返回 1 。<br>
+设置失败，返回 0 。</p>
+<pre><code>redis&gt; EXISTS job                # job 不存在
+(integer) 0
+redis&gt; SETNX job "programmer"    # job 设置成功
+(integer) 1
+redis&gt; SETNX job "code-farmer"   # 尝试覆盖 job ，失败
+(integer) 0
+redis&gt; GET job                   # 没有被覆盖
+"programmer"
+</code></pre>
+<h4 id="getset-key-value">GETSET key value</h4>
+<p>将给定 key 的值设为 value ，并返回 key 的旧值(old value)。<br>
+当 key 存在但不是字符串类型时，返回一个错误。<br>
+<strong>可用版本：</strong><br>
+1.0.0+<br>
+<strong>时间复杂度：</strong><br>
+O(1)<br>
+<strong>返回值：</strong><br>
+返回给定 key 的旧值。<br>
+当 key 没有旧值时，也即是， key 不存在时，返回 nil 。</p>
+<pre><code>redis&gt; GETSET db mongodb    # 没有旧值，返回 nil
+(nil)
+redis&gt; GET db
+"mongodb"
+redis&gt; GETSET db redis      # 返回旧值 mongodb
+"mongodb"
+redis&gt; GET db
+"redis"
+</code></pre>
+<h4 id="思路">思路</h4>
+<p>为了让分布式锁的算法更稳键些，持有锁的客户端在解锁之前应该再检查一次自己的锁是否已经超时，再去做DEL操作，因为可能客户端因为某个耗时的操作而挂起，操作完的时候锁因为超时已经被别人获得，这时就不必解锁了。</p>
 <h2 id="总结">总结</h2>
 <p>本文对redis的常见问题做了一个总结。大部分是博主自己在工作中遇到，以及以前面试别人的时候，爱问的一些问题。另外，<strong>不推荐大家临时抱佛脚</strong>，真正碰到一些有经验的工程师，其实几下就能把你问懵。最后，希望大家有所收获吧。</p>
 <blockquote>
 <p>reference：<br>
-<a href="https://www.cnblogs.com/rjzheng/p/9096228.html">https://www.cnblogs.com/rjzheng/p/9096228.html</a></p>
+<a href="https://www.cnblogs.com/rjzheng/p/9096228.html">https://www.cnblogs.com/rjzheng/p/9096228.html</a><br>
+<a href="https://blog.csdn.net/fuyuwei2015/article/details/72870131">https://blog.csdn.net/fuyuwei2015/article/details/72870131</a></p>
 </blockquote>
 
