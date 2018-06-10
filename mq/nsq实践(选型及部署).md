@@ -7,6 +7,7 @@
 <h3 id="、为什么要使用消息队列">1、为什么要使用消息队列?</h3>
 <p><strong>回答</strong>:基于最主要的应用场景，即六个字:<strong>解耦、异步、削峰</strong></p>
 <h3 id="nsq组件构成">2.nsq组件构成</h3>
+<p>nsq 有三个必要的组件 nsqd、nsqlookupd、nsqadmin 其中nsqd 和 nsqlookup是必须部署的.</p>
 <h3 id="nsq集群部署">3.nsq集群部署</h3>
 <h3 id="常见问题">4.常见问题</h3>
 <blockquote>
