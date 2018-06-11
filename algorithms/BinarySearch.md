@@ -1,7 +1,4 @@
----
 
-
----
 
 <h2 id="二分查找-vs-快速排序">二分查找 vs 快速排序</h2>
 <p><strong>相同点</strong>:<br>
@@ -55,57 +52,60 @@ binarySearch是用到分治但不一定一定要用递归去实现，可以通�
 <ul>
 <li>快排</li>
 </ul>
-<pre class=" language-go"><code class="prism  language-go">
-<span class="token keyword">func</span> <span class="token function">quickSort</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+~~~go
+//第一种实现
+func quickSort(arr []int) {
 
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"quick :"</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>
+	quickSort2(arr, 0, len(arr)-1)
 
-<span class="token punctuation">}</span>
+	fmt.Println("quick :", arr)
 
-<span class="token keyword">func</span> <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> right <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"left:"</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> <span class="token string">"right:"</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-	<span class="token keyword">if</span> left <span class="token operator">&gt;=</span> right <span class="token punctuation">{</span>
-		<span class="token comment">//起始位置大于或等于终止位置，说明不再需要排序</span>
-		<span class="token keyword">return</span>
-	<span class="token punctuation">}</span>
+}
 
-	<span class="token comment">//i := partition(arr, left, right)</span>
+func quickSort2(arr []int, left, right int) {
+	fmt.Println("left:", left, "right:", right)
+	if left >= right {
+		//起始位置大于或等于终止位置，说明不再需要排序
+		return
+	}
 
-	i <span class="token operator">:=</span> left
+	//i := partition(arr, left, right)
 
-	j <span class="token operator">:=</span> right
+	i := left
 
-	key <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">(</span>left<span class="token operator">+</span>right<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span>
+	j := right
 
-	<span class="token keyword">for</span> <span class="token punctuation">{</span>
+	key := arr[(left+right)/2]
 
-		<span class="token keyword">for</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> key <span class="token punctuation">{</span>
+	for {
 
-			i<span class="token operator">++</span>
-		<span class="token punctuation">}</span>
+		for arr[i] < key {
 
-		<span class="token keyword">for</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> key <span class="token punctuation">{</span>
+			i++
+		}
 
-			j<span class="token operator">--</span>
-		<span class="token punctuation">}</span>
+		for arr[j] > key {
 
-		<span class="token keyword">if</span> i <span class="token operator">&gt;=</span> j <span class="token punctuation">{</span>
+			j--
+		}
 
-			<span class="token keyword">break</span>
-		<span class="token punctuation">}</span>
-		arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-		<span class="token comment">//fmt.Println("i:", i,"j:",j,"arr:",arr)</span>
-	<span class="token punctuation">}</span>
+		if i >= j {
 
-	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> i<span class="token number">-1</span><span class="token punctuation">)</span>
+			break
+		}
+		arr[i], arr[j] = arr[j], arr[i]
+		//fmt.Println("i:", i,"j:",j,"arr:",arr)
+	}
 
-	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
-	<span class="token comment">//fmt.Println("end")</span>
+	quickSort2(arr, left, i-1)
 
-<span class="token punctuation">}</span>
-</code></pre>
+	quickSort2(arr, i+1, right)
+	//fmt.Println("end")
+
+}
+
+~~~
 <blockquote>
 <p>reference:<br>
 <a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a><br>
