@@ -5,7 +5,7 @@
 
 <h2 id="引言">引言</h2>
 <h3 id="为什么写这篇文章">为什么写这篇文章?</h3>
-<p>考虑到绝大部分写业务的程序员，在实际开发中使用redis的时候，只会setvalue和getvalue两个操作，对redis整体缺乏一个认知。又恰逢博主某个同事下周要去培训redis，所以博主斗胆以redis为题材，对redis常见问题做一个总结，希望能够弥补大家的知识盲点。</p>
+<p>考虑到绝大部分写业务的程序员，在实际开发中使用redis的时候，只会setvalue和getvalue两个操作，对redis整体缺乏一个认知，所以博主斗胆以redis为题材，对redis常见问题做一个总结，希望能够弥补大家的知识盲点。</p>
 <h3 id="复习要点">复习要点?</h3>
 <p>本文围绕以下几点进行阐述<br>
 1、<a href="#1">为什么使用redis</a><br>
@@ -204,6 +204,7 @@ redis&gt; GET db
 <blockquote>
 <p>reference：<br>
 <a href="https://www.cnblogs.com/rjzheng/p/9096228.html">https://www.cnblogs.com/rjzheng/p/9096228.html</a><br>
-<a href="https://blog.csdn.net/fuyuwei2015/article/details/72870131">https://blog.csdn.net/fuyuwei2015/article/details/72870131</a></p>
+<a href="https://blog.csdn.net/fuyuwei2015/article/details/72870131">https://blog.csdn.net/fuyuwei2015/article/details/72870131</a><br>
+<a href="http://www.scienjus.com/redis-use-case/">http://www.scienjus.com/redis-use-case/</a></p>
 </blockquote>
 
