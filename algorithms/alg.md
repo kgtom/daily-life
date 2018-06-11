@@ -339,20 +339,24 @@ func partition(sortArray []int, left, right int) int {
 ~~~
 
 <h3 id="完整源码">完整源码</h3>
-~~~go
-/*
+
+~~~
 总结：
 快速排序是最快的通用排序算法，它的内循环的指令很少，而且它还能利用缓存，因为它总是顺序地访问数据。它的运行时间近似为 ~cNlogN，这里的 c 比其他线性对数级别的排序算法都要小
-*/
+~~~
 
 详见：https://play.golang.org/p/cAThuI0eobN	
 
-~~~
 
-> reference:
+
+reference：
 
 http://www.cnblogs.com/agui521/p/6918229.html
+
 https://github.com/gaopeng527/go_Algorithm/blob/master/sort.go
+
 https://blog.csdn.net/wangshubo1989/article/details/75135119
+
 https://github.com/arnauddri/algorithms/
+
 
