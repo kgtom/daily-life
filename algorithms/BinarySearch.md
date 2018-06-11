@@ -55,48 +55,56 @@ binarySearch是用到分治但不一定一定要用递归去实现，可以通�
 <ul>
 <li>快排</li>
 </ul>
-<pre class=" language-go"><code class="prism  language-go"><span class="token keyword">func</span> <span class="token function">quickSort</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-  
-   <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>  
-  
-   <span class="token comment">//recurse(0, len(arr), arr)  </span>
-  
-  fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"quick :"</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>  
-  
-<span class="token punctuation">}</span>  
-  
-<span class="token keyword">func</span> <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> right <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-   fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"left:"</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> <span class="token string">"right:"</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>  
-   <span class="token keyword">if</span> left <span class="token operator">&gt;=</span> right <span class="token punctuation">{</span>  
-      <span class="token comment">//起始位置大于或等于终止位置，说明不再需要排序  </span>
-	  <span class="token keyword">return</span>  
-	  <span class="token punctuation">}</span>  
-  
-  i <span class="token operator">:=</span> left  
-  j <span class="token operator">:=</span> right  
-  key <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">(</span>left<span class="token operator">+</span>right<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span>  
-  
-   <span class="token keyword">for</span> <span class="token punctuation">{</span>  
-      <span class="token keyword">for</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> key <span class="token punctuation">{</span>  
-        i<span class="token operator">++</span>  
-      <span class="token punctuation">}</span>  
-     <span class="token keyword">for</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> key <span class="token punctuation">{</span>  
-        j<span class="token operator">--</span>  
-      <span class="token punctuation">}</span>  
-      <span class="token keyword">if</span> i <span class="token operator">&gt;=</span> j <span class="token punctuation">{</span>  
-       <span class="token keyword">break</span>  
-	   <span class="token punctuation">}</span>  
-      arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>  
-     
-     <span class="token punctuation">}</span>  
-  
-   <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> i<span class="token number">-1</span><span class="token punctuation">)</span>  
-  
-   <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>  
-   <span class="token comment">//fmt.Println("end")  </span>
-  
-<span class="token punctuation">}</span>  
+<pre class=" language-go"><code class="prism  language-go">
+<span class="token keyword">func</span> <span class="token function">quickSort</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
+	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"quick :"</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> right <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"left:"</span><span class="token punctuation">,</span> left<span class="token punctuation">,</span> <span class="token string">"right:"</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> left <span class="token operator">&gt;=</span> right <span class="token punctuation">{</span>
+		<span class="token comment">//起始位置大于或等于终止位置，说明不再需要排序</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//i := partition(arr, left, right)</span>
+
+	i <span class="token operator">:=</span> left
+
+	j <span class="token operator">:=</span> right
+
+	key <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">(</span>left<span class="token operator">+</span>right<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span>
+
+	<span class="token keyword">for</span> <span class="token punctuation">{</span>
+
+		<span class="token keyword">for</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> key <span class="token punctuation">{</span>
+
+			i<span class="token operator">++</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">for</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> key <span class="token punctuation">{</span>
+
+			j<span class="token operator">--</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">if</span> i <span class="token operator">&gt;=</span> j <span class="token punctuation">{</span>
+
+			<span class="token keyword">break</span>
+		<span class="token punctuation">}</span>
+		arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		<span class="token comment">//fmt.Println("i:", i,"j:",j,"arr:",arr)</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> i<span class="token number">-1</span><span class="token punctuation">)</span>
+
+	<span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span>
+	<span class="token comment">//fmt.Println("end")</span>
+
+<span class="token punctuation">}</span>
 </code></pre>
 <blockquote>
 <p>reference:<br>
