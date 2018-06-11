@@ -7,48 +7,54 @@
 binarySearch是用到分治但不一定一定要用递归去实现，可以通过循环迭代实现。<br>
 由于循环相比递归少了很多内存分配和压栈的操作开销会少很多，所以binarySearch最好的实现方式是通过循环实现。</p>
 <p>*循环迭代</p>
-<pre class=" language-go"><code class="prism  language-go"><span class="token comment">//二分查找迭代版本 LgN级别  </span>
-<span class="token keyword">func</span> <span class="token function">BinarySearch</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> searchVal <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>  
-   <span class="token comment">//定义查找区间为[l,r]  </span>
-  l<span class="token punctuation">,</span> r <span class="token operator">:=</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token number">-1</span>  
-  <span class="token comment">//历史上著名的bug l与r都是int的最大值得情况下则l+r越界  </span>
- <span class="token comment">//mid := (l+r)/2  </span>
-  <span class="token keyword">for</span> l <span class="token operator">&lt;=</span> r <span class="token punctuation">{</span>  
-      mid <span class="token operator">:=</span> l <span class="token operator">+</span> <span class="token punctuation">(</span>r<span class="token operator">-</span>l<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span>  
-  
-  <span class="token keyword">if</span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> searchVal <span class="token punctuation">{</span>  
-         <span class="token keyword">return</span> mid  
-      <span class="token punctuation">}</span>  
-      <span class="token keyword">if</span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> searchVal <span class="token punctuation">{</span>  
-         l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>  
-  
-  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>  
-         r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span>  
-  <span class="token punctuation">}</span>  
-   <span class="token punctuation">}</span>  
-   <span class="token comment">//不存在此searchVal值  </span>
-  <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>  
-<span class="token punctuation">}</span>
 
-</code></pre>
+~~~go
+//二分查找迭代版本 LgN级别
+func BinarySearch(arr []int, n int, searchVal int) int {
+	//定义查找区间为[l,r]
+	l, r := 0, n-1
+	//历史上著名的bug l与r都是int的最大值得情况下则l+r越界
+	//mid := (l+r)/2
+	for l <= r {
+		mid := l + (r-l)/2
+		if arr[mid] == searchVal {
+			return mid
+		}
+		if arr[mid] < searchVal {
+			l = mid + 1
+
+		} else {
+			r = mid - 1
+		}
+	}
+	//不存在此searchVal值
+	return -1
+}
+
+~~~
+
 <p>*递归版本</p>
-<pre class=" language-go"><code class="prism  language-go"><span class="token comment">//二分查找递归版本  </span>
-<span class="token keyword">func</span> <span class="token function">BinarySearchV2</span><span class="token punctuation">(</span>arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">,</span> target <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>  
-   <span class="token keyword">if</span> l <span class="token operator">&lt;=</span> r <span class="token punctuation">{</span>  
-      mid <span class="token operator">:=</span> l <span class="token operator">+</span> <span class="token punctuation">(</span>r<span class="token operator">-</span>l<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span>  
-  <span class="token keyword">if</span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> target <span class="token punctuation">{</span>  
-         <span class="token keyword">return</span> mid  
-      <span class="token punctuation">}</span>  
-      <span class="token keyword">if</span> arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> target <span class="token punctuation">{</span>  
-         <span class="token keyword">return</span> <span class="token function">BinarySearchV2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> r<span class="token punctuation">,</span> target<span class="token punctuation">)</span>  
-      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>  
-         <span class="token keyword">return</span> <span class="token function">BinarySearchV2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> l<span class="token punctuation">,</span> mid<span class="token number">-1</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span>  
-      <span class="token punctuation">}</span>  
-   <span class="token punctuation">}</span>  
-   <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>  
-<span class="token punctuation">}</span>
 
-</code></pre>
+~~~go
+
+//二分查找递归版本
+func BinarySearchV2(arr []int, l, r, target int) int {
+	if l <= r {
+		mid := l + (r-l)/2
+		if arr[mid] == target {
+			return mid
+		}
+		if arr[mid] < target {
+			return BinarySearchV2(arr, mid+1, r, target)
+		} else {
+			return BinarySearchV2(arr, l, mid-1, target)
+		}
+	}
+	return -1
+}
+
+~~~
+
 <ul>
 <li>快排</li>
 </ul>
