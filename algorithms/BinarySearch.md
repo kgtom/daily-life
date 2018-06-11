@@ -77,25 +77,18 @@ binarySearch是用到分治但不一定一定要用递归去实现，可以通�
   key <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">(</span>left<span class="token operator">+</span>right<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span>  
   
    <span class="token keyword">for</span> <span class="token punctuation">{</span>  
-  
       <span class="token keyword">for</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> key <span class="token punctuation">{</span>  
-  
         i<span class="token operator">++</span>  
       <span class="token punctuation">}</span>  
-  
-      <span class="token keyword">for</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> key <span class="token punctuation">{</span>  
-  
-         j<span class="token operator">--</span>  
-       <span class="token punctuation">}</span>  
-  
+     <span class="token keyword">for</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> key <span class="token punctuation">{</span>  
+        j<span class="token operator">--</span>  
+      <span class="token punctuation">}</span>  
       <span class="token keyword">if</span> i <span class="token operator">&gt;=</span> j <span class="token punctuation">{</span>  
-  
-         <span class="token keyword">break</span>  
-		 <span class="token punctuation">}</span>  
-  
+       <span class="token keyword">break</span>  
+	   <span class="token punctuation">}</span>  
       arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>  
-      <span class="token comment">//fmt.Println("i:", i,"j:",j,"arr:",arr)  </span>
-  <span class="token punctuation">}</span>  
+     
+     <span class="token punctuation">}</span>  
   
    <span class="token function">quickSort2</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> left<span class="token punctuation">,</span> i<span class="token number">-1</span><span class="token punctuation">)</span>  
   
@@ -110,9 +103,4 @@ binarySearch是用到分治但不一定一定要用递归去实现，可以通�
 <a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a><br>
 <a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a></p>
 </blockquote>
-<p><strong>二叉排序树是一种比较有用的折衷方案。<br>
-数组的搜索比较方便，可以直接用下标，但删除或者插入某些元素就比较麻烦。<br>
-链表与之相反，删除和插入元素很快，但查找很慢。<br>
-二叉排序树就既有链表的好处，也有数组的好处。<br>
-在处理大批量的动态的数据是比较有用。</strong></p>
 
