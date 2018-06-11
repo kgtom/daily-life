@@ -6,7 +6,10 @@
 <p><strong>不同点</strong>:<br>
 binarySearch是用到分治但不一定一定要用递归去实现，可以通过循环迭代实现。<br>
 由于循环相比递归少了很多内存分配和压栈的操作开销会少很多，所以binarySearch最好的实现方式是通过循环实现。</p>
-<p>*循环迭代</p>
+
+<ul>
+<li>循环迭代</li>
+</ul>
 
 ~~~go
 //二分查找迭代版本 LgN级别
@@ -33,7 +36,10 @@ func BinarySearch(arr []int, n int, searchVal int) int {
 
 ~~~
 
-<p>*递归版本</p>
+
+<ul>
+<li>递归版本</li>
+</ul>
 
 ~~~go
 
