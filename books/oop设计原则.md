@@ -68,9 +68,9 @@
 </blockquote>
 <h3 id="d">5.D</h3>
 <blockquote>
-<p>概念：<br>
-例子：高层：台灯 和 底层电路，需要插头、插座，而不是两者直接相连<br>
-设计模式</p>
+<p>概念：高层不依赖底层<br>
+例子：高层台灯 和 底层 电路，需要插头、插座，而不是两者直接相连<br>
+基于接口编程</p>
 </blockquote>
 <blockquote>
 <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
