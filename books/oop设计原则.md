@@ -1,7 +1,4 @@
----
 
-
----
 
 <h2 id="面向对象设计的原则solid">面向对象设计的原则(SOLID)</h2>
 
@@ -72,7 +69,5 @@
 例子：高层台灯 和 底层 电路，需要插头、插座，而不是两者直接相连<br>
 基于接口编程</p>
 </blockquote>
-<blockquote>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
+
 
