@@ -22,7 +22,15 @@
 ### 1.upstream 配置
 
 ### 2.负载均衡算法
-## <span id="2">二、nginx失败重试</span>
+
+### 3.失败重试
+
+### 4.心跳检查
+
+
+## <span id="2">二、nginx反向代理</span>
+
+## <span id="3">三、nginx域名、备份、不可用服务器</span>
 
 
 >Reference
