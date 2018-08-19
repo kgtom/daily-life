@@ -24,8 +24,11 @@
 ### 2.负载均衡算法
 
 ### 3.失败重试
+    配置两部分： upstream server 和 proxy_pass
 
 ### 4.心跳检查
+   * tpc心跳检查
+   * http心跳检查
 
 
 ## <span id="2">二、nginx反向代理</span>
