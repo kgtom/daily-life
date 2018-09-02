@@ -21,6 +21,32 @@
 
 ### 1.upstream 配置
 
+
+~~~
+
+upstream backend {
+server 192.168.0.28:8001 weight=1;
+server 192.168.0.28:8002 weight=2;
+
+}
+~~~
+
+**配置参数:**
+
+* IP地址和端口： 配置服务器IP 和端口
+* 权重: 默认1，权重越高，分配给该服务器越多
+
+
+配置 proxy_pass处理用户请求
+~~~
+location /{
+
+proxy_pass http:// xxx.com;
+}
+~~~
+
+
+
 ### 2.负载均衡算法
 
 ### 3.失败重试
