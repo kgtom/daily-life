@@ -17,10 +17,10 @@
 4. 心跳检测：上游服务器心跳检测
 
 一图胜千言：
+![Nginx](https://github.com/kgtom/daily-life/blob/master/books/images/Nginx.jpg)
 
 
 ### 1.upstream 配置
-
 
 ~~~
 
@@ -44,7 +44,6 @@ location /{
 proxy_pass http:// xxx.com;
 }
 ~~~
-
 
 
 ### 2.负载均衡算法
