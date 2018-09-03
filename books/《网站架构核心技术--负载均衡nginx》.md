@@ -48,6 +48,48 @@ proxy_pass http:// xxx.com;
 
 ### 2.负载均衡算法
 
+负载均衡解决用户请求到来时，如何选择upstream server 进行处理，默认round-robin(轮询)，同时支持其他算法：
+
+   * round-robin：轮询，可以配置weight 实现基于权重的轮询
+   * ip_hash: 根据客户IP进行负载，即相同IP将负载到同一个upstream server
+
+        ~~~
+          upstream backend {
+            ip_hash;
+            server 192.168.0.28:8001 weight=1;
+            server 192.168.0.28:8002 weight=2;
+
+            }
+        ~~~
+   * hash key:对某一个key进行哈希或者使用一致性哈希算法
+
+
+        **哈希算法：针对url进行负载**
+        ~~~
+          upstream backend {
+            hash $url;
+            server 192.168.0.28:8001 weight=1;
+            server 192.168.0.28:8002 weight=2;
+
+            }
+        ~~~
+        
+        **一致性哈希算法：consistent_key 动态指定进行负载**
+        ~~~
+          upstream backend {
+            hash $consistent_key consistent;
+            server 192.168.0.28:8001 weight=1;
+            server 192.168.0.28:8002 weight=2;
+
+            }
+        ~~~
+   * least_conn: 基于最小活跃连接负载到这个机器上
+
+    
+   * least_time:商业版有，基于最小平均相应时间
+
+
+
 ### 3.失败重试
     配置两部分： upstream server 和 proxy_pass
 
