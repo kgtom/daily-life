@@ -91,8 +91,9 @@ proxy_pass http:// xxx.com;
 
 
 ### 3.失败重试
+
     配置两部分： upstream server 和 proxy_pass
-~~~
+
     upstream backend {
        
     server 192.168.0.28:8001 weight=1;
@@ -100,7 +101,7 @@ proxy_pass http:// xxx.com;
 
     }
     
-    ~~~
+   
 
 ### 4.心跳检查
    Nginx 对上游服务器的心跳检查默认采用惰性策略，Nginx 商业版提供 health_check 进行主动检查。我们可以集成nginx_upstream_check_module模块进行主动检查，它包括两种：
