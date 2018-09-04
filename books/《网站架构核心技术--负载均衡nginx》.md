@@ -94,8 +94,45 @@ proxy_pass http:// xxx.com;
     配置两部分： upstream server 和 proxy_pass
 
 ### 4.心跳检查
-   * tpc心跳检查
+   Nginx 对上游服务器的心跳检查默认采用惰性策略，Nginx 商业版提供 health_check 进行主动检查。我们可以集成nginx_upstream_check_module模块进行主动检查，它包括两种：
+   * tcp心跳检查
    * http心跳检查
+
+~~~
+ upstream backend {
+           
+            server 192.168.0.28:8001 weight=1;
+            server 192.168.0.28:8002 weight=2;
+            check interval=3000 rise=1 fall=3 timeout=2000 type=tcp;
+            }
+
+~~~
+
+**tcp心跳：参数解读：**
+ * interval:检查间隔时间，此处配置没3秒一次；
+ * fall:检查失败多少次后，认为该服务器不存活；
+ * rise:检查成功多少次后，认为该服务器存活；
+ * timeout:检查请求超时时间的配置；
+
+
+~~~
+ upstream backend {
+           
+            server 192.168.0.28:8001 weight=1;
+            server 192.168.0.28:8002 weight=2;
+            check interval=3000 rise=1 fall=3 timeout=2000 type=http;
+            check_http_send "HEAD /status HTTP/1.0\r\n\r\n";
+            check_http_expeck_alive http_2xx http_3xx;
+            
+            }
+
+~~~
+
+**http心跳参数解读：**
+* check_http_send:检查时发的http请求内容；
+* check_http_expect_alive:当上游服务器返回匹配的响应状态码时，则认为服务器存活；
+
+**注意：** 配置间隔时间不能太短，否则可能因为配置心跳检查包太多，服务器挂掉，此外需要配置合理的超时时间。
 
 
 ## <span id="2">二、nginx反向代理</span>
