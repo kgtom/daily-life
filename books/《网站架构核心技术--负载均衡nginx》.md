@@ -147,6 +147,47 @@ proxy_pass http:// xxx.com;
 
 ## <span id="2">二、nginx反向代理</span>
 
+
+   ### 1.理解正向代理和反向代理
+   
+   * 正向代理：客户端通过中间代理层访问后端服务器。例如：客户端 通过代理 访问google
+   * 反向代理：将代理层作为公网地址，客户端访问代理层，代理层将请求分发给后端服务器。例如：目前大型网站几乎都是这样做的。
+      
+   
+   ### 2.proxy_pass_http配置代理，upstream实现负载均衡
+   
+  ~~~
+  upstream backend {
+
+  server 192.168.0.28:8001 weight=1;
+  server 192.168.0.28:8002 weight=2;                                    
+
+ }
+
+
+server {
+
+    listen       80;
+    server_name  www.xxx.com;    #访问的域名，如果有多个，用逗号分开
+    charset utf8;
+    location / {
+
+        proxy_pass       http://backend; 
+
+        proxy_set_header Host      $host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      }
+
+   }
+
+}
+   ~~~
+
+
 ## <span id="3">三、nginx域名、备份、不可用服务器</span>
 
 
