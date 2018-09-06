@@ -144,6 +144,8 @@ proxy_pass http:// xxx.com;
 
 **注意：** 配置间隔时间不能太短，否则可能因为配置心跳检查包太多，服务器挂掉，此外需要配置合理的超时时间。
 
+### 5.动态负载均衡
+
 
 ## <span id="2">二、nginx反向代理</span>
 
@@ -154,7 +156,7 @@ proxy_pass http:// xxx.com;
    * 反向代理：将代理层作为公网地址，客户端访问代理层，代理层将请求分发给后端服务器。例如：目前大型网站几乎都是这样做的。
       
    
-   ### 2.proxy_pass_http配置代理，upstream实现负载均衡
+   ### 2.proxy_pass http配置代理，upstream实现负载均衡
    
   ~~~
   upstream backend {
@@ -190,6 +192,44 @@ server {
 
 ## <span id="3">三、nginx域名、备份、不可用服务器</span>
 
+### 1.域名服务器配置
+
+~~~
+upstream backend {
+server a.com;
+server b.com;
+
+}
+~~~
+
+Nginx社区版中，ip地址发生变化后，upstream不会自动更新，Nginx商业版才支持动态更新。 
+
+### 2.备份上游服务器
+
+~~~
+upstream backend {
+
+server 192.168.0.28:8001 weight=1;
+server 192.168.0.28:8002 weight=1 backup;
+
+}
+
+~~~
+将8002端口上游服务器配置为备上游服务器，当所有主上游服务器都不存活的时候，请求会转发给备上游服务器上。
+
+### 3.不可用上游服务器
+
+~~~
+upstream backend {
+server 192.168.0.28:8001 weight=1;
+server 192.168.0.28:8002 weight=2 down;
+}
+~~~
+
+8002 为永久不可用服务器。使用场景：测试或者机器故障，使用down 临时摘掉该服务器。
+
+
+## <span id="3">四、nginx长链接</span>
 
 >Reference
 
