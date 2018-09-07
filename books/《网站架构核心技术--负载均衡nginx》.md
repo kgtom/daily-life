@@ -146,6 +146,22 @@ proxy_pass http:// xxx.com;
 
 ### 5.动态负载均衡
 
+#### 1.背景
+   上述负载均衡实现，如果upstream 服务有变动的话，需要手动更改nginx upstream列表，对于新的upstream 服务上线，也不能自动更新nginx upstream 列表，因此我们需要一种服务注册，将upstream 自动注册到Nginx upstream，从而实现了服务自动发现。
+   
+#### 2. consul出现
+consul一种分布式开源的服务注册与发现系统，通过http api 实现服务注册与发现。支持以下特性：
+  * 服务注册:服务实现者 通过http api 将服务注册到consul
+  * 服务发现：服务消费者 通过http api 从consul获取服务ip 和port
+  * 故障检测：分tcp 和http 两种
+  * K/V存储：kv存储配置信息
+  * 多数据中心：避免数据中心单点故障
+  * Raft算法：实现数据一致性
+  
+#### 3.动态负载均衡：consul + consul-template
+   使用consul-template配置模板，长轮询检测服务变更，一旦发现变更，拉取consul配置来渲染模板生成Nginx实际配置，即修改Nginx upstream 列表，最后调用Nginx重启脚步，重启Nginx。
+   一图胜千言：
+
 
 ## <span id="2">二、nginx反向代理</span>
 
