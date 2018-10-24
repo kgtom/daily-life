@@ -66,61 +66,60 @@ func BinarySearchV2(arr []int, l, r, target int) int {
 </ul>
 
 ~~~go
-//第一种实现
-func quickSort(arr []int) {
+package main
 
-	quickSort2(arr, 0, len(arr)-1)
+import "fmt"
 
-	fmt.Println("quick :", arr)
+func main() {
+
+	nums := []int{5, 7, 6, 4, 9, 8, 10}
+
+	quickSort(nums, 0, len(nums)-1)
+	fmt.Println("nums2:", nums)
 
 }
 
-func quickSort2(arr []int, left, right int) {
-	fmt.Println("left:", left, "right:", right)
+//快排--递归版本
+func quickSort(nums []int, left, right int) {
+
+	//跳出递归
 	if left >= right {
-		//起始位置大于或等于终止位置，说明不再需要排序
 		return
 	}
+	pivotIdx := partition(nums, left, right)
+	quickSort(nums, left, pivotIdx-1)  //左边递归
+	quickSort(nums, pivotIdx+1, right) //右边递归
+}
 
-	//i := partition(arr, left, right)
+func partition(nums []int, left, right int) int {
 
-	i := left
+	//以nums[left]为中轴
+	pivotVal := nums[left]
+	pivotIdx := left
+	for left < right {
 
-	j := right
-
-	key := arr[(left+right)/2]
-
-	for {
-
-		for arr[i] < key {
-
-			i++
+		//从右边开始，当小于pivotVal时 跳出，等待下面找个大的交换
+		for nums[right] > pivotVal && left < right {
+			right--
 		}
-
-		for arr[j] > key {
-
-			j--
+		for nums[left] <= pivotVal && left < right {
+			left++
 		}
+		fmt.Println(" nums:", nums, "left:", left, "right:", right)
+		nums[left], nums[right] = nums[right], nums[left]
+		fmt.Println(" nums:", nums)
 
-		if i >= j {
-
-			break
-		}
-		arr[i], arr[j] = arr[j], arr[i]
-		//fmt.Println("i:", i,"j:",j,"arr:",arr)
 	}
-
-	quickSort2(arr, left, i-1)
-
-	quickSort2(arr, i+1, right)
-	//fmt.Println("end")
-
+	fmt.Println("mid-pivotIdx:", pivotIdx)
+	//把left新的中间  放在中间
+	nums[left], nums[pivotIdx] = nums[pivotIdx], nums[left]
+	return left
 }
 
 ~~~
 <blockquote>
 <p>reference:<br>
-<a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a><br>
-<a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a></p>
+[csdn](<a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a><br>
+[csdn](<a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a></p>)
 </blockquote>
 
