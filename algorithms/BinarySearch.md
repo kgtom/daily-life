@@ -65,6 +65,7 @@ func BinarySearchV2(arr []int, l, r, target int) int {
 <li>快排</li>
 </ul>
 
+** 快排--递归版本 **
 ~~~go
 package main
 
@@ -117,11 +118,16 @@ func partition(nums []int, left, right int) int {
 }
 
 ~~~
+
+** 快排--循环版本 **
+
+
 <blockquote>
 reference:<br>
 	
-* [csdn](<a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a>)
-* [csdn](<a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a>)
+* [csdn](https://blog.csdn.net/qhrqhrqhr/article/details/50975717)
+* [csdn](https://github.com/bigbignerd/basicAlgorithm)
+
 	
 </blockquote>
 
