@@ -118,8 +118,10 @@ func partition(nums []int, left, right int) int {
 
 ~~~
 <blockquote>
-<p>reference:<br>
-[csdn](<a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a><br>
-[csdn](<a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a></p>)
+reference:<br>
+	
+* [csdn](<a href="https://blog.csdn.net/qhrqhrqhr/article/details/50975717">https://blog.csdn.net/qhrqhrqhr/article/details/50975717</a>)
+* [csdn](<a href="https://github.com/bigbignerd/basicAlgorithm">https://github.com/bigbignerd/basicAlgorithm</a>)
+	
 </blockquote>
 
