@@ -1,15 +1,14 @@
 
 
-<h2 id="二分查找-vs-快速排序">二分查找 vs 快速排序</h2>
-<p><strong>相同点</strong>:<br>
-两者都用到分治的思想很容易搞混。</p>
-<p><strong>不同点</strong>:<br>
-binarySearch是用到分治但不一定一定要用递归去实现，可以通过循环迭代实现。<br>
-由于循环相比递归少了很多内存分配和压栈的操作开销会少很多，所以binarySearch最好的实现方式是通过循环实现。</p>
+### 二分查找 vs 快速排序
+**相同点:**
+ 两者都用到分治的思想很容易搞混。
+**不同点**
+binarySearch是用到分治但不一定一定要用递归去实现，可以通过循环迭代实现。
 
-<ul>
-<li>循环迭代</li>
-</ul>
+由于循环相比递归少了很多内存分配和压栈的操作,开销会少很多，所以binarySearch最好做法通过循环实现。
+
+**循环迭代**
 
 ~~~go
 //二分查找迭代版本 LgN级别
@@ -37,15 +36,13 @@ func BinarySearch(arr []int, n int, searchVal int) int {
 ~~~
 
 
-<ul>
-<li>递归版本</li>
-</ul>
+**递归版本**
 
 ~~~go
 
 //二分查找递归版本
 func BinarySearchV2(arr []int, l, r, target int) int {
-	if l <= r {
+	for l <= r {
 		mid := l + (r-l)/2
 		if arr[mid] == target {
 			return mid
@@ -122,12 +119,11 @@ func partition(nums []int, left, right int) int {
 ** 快排--循环版本 **
 
 
-<blockquote>
-reference:<br>
+
+> reference:
 	
 * [csdn](https://blog.csdn.net/qhrqhrqhr/article/details/50975717)
 * [csdn](https://github.com/bigbignerd/basicAlgorithm)
 
-	
-</blockquote>
+
 
